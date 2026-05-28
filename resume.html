@@ -3,22 +3,108 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title data-zh="简历 · 廖思嘉" data-en="Resume · Liao Sijia">简历 · 廖思嘉</title>
+  <title data-zh="廖思嘉 · 简历" data-en="Liao Sijia · Resume">廖思嘉 · 简历</title>
+  <meta name="description"
+    data-zh="廖思嘉的简历——教育科技方向硕士，求职意向产品 / 运营。"
+    data-en="Resume of Liao Sijia — EdTech grad student, seeking Product / Operations roles.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
   <link rel="stylesheet" href="styles.css">
+  <style>
+    /* 简历 PDF 展示页专用样式 */
+    .resume-viewer-wrap {
+      max-width: var(--wide-w);
+      margin: 0 auto;
+      padding: var(--space-12) var(--space-6) var(--space-20);
+    }
+    .resume-viewer-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      margin-bottom: var(--space-8);
+    }
+    .resume-viewer-title {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4vw, 40px);
+      letter-spacing: -0.025em;
+      font-weight: 600;
+    }
+    .resume-viewer-sub {
+      font-size: 15px;
+      color: var(--text-secondary);
+      margin-top: var(--space-2);
+    }
+    .resume-viewer-actions {
+      display: flex;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+    }
+    .resume-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: 0.02em;
+      transition: all 200ms var(--ease-out);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      white-space: nowrap;
+    }
+    .resume-btn:hover { border-color: var(--border-strong); transform: translateY(-1px); }
+    .resume-btn.primary {
+      background: var(--text);
+      color: var(--surface);
+      border-color: var(--text);
+    }
+    .resume-btn.primary:hover { background: #333; }
+    .resume-btn svg { width: 15px; height: 15px; }
+    .resume-frame {
+      width: 100%;
+      height: 1180px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface-soft);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+    .resume-frame iframe,
+    .resume-frame embed {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+    /* 移动端：PDF 内嵌在手机上体验差，给一个醒目的打开按钮兜底 */
+    .resume-mobile-hint {
+      display: none;
+      margin-top: var(--space-4);
+      font-size: 13px;
+      color: var(--text-tertiary);
+      text-align: center;
+    }
+    @media (max-width: 720px) {
+      .resume-frame { height: 70vh; }
+      .resume-mobile-hint { display: block; }
+    }
+  </style>
 </head>
 <body>
 
   <header class="nav">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo">Liao Sijia / 廖思嘉</a>
+      <a href="index.html#top" class="nav-logo">Liao Sijia / 廖思嘉</a>
       <nav class="nav-links" aria-label="Main">
         <a href="index.html#about" class="nav-link" data-zh="关于" data-en="About">关于</a>
         <a href="index.html#work" class="nav-link" data-zh="案例" data-en="Work">案例</a>
-        <a href="resume.html" class="nav-link text-accent" data-zh="简历" data-en="Resume">简历</a>
+        <a href="resume.html" class="nav-link" data-zh="简历" data-en="Resume">简历</a>
       </nav>
       <div class="nav-right">
         <button class="lang-toggle" aria-label="Switch language">EN</button>
@@ -26,318 +112,46 @@
     </div>
   </header>
 
-  <main class="resume-page">
-    <div class="wrap">
-
-      <!-- Header -->
-      <header class="resume-header reveal">
-        <div class="resume-avatar">
-          <img src="assets/avatar.jpg" alt="" onerror="this.style.display='none'">
-        </div>
-        <div>
-          <h1 class="resume-name" data-zh="廖思嘉" data-en="Liao Sijia">廖思嘉</h1>
-          <p class="resume-tagline"
-            data-zh="教育科技方向硕士。用研究方法理解用户，用产品思维解决问题，用 AI 工具把想法做成原型。"
-            data-en="Educational technology grad student. I use research methods to understand users, product judgment to spot what's worth building, and AI tools to ship prototypes myself.">
-            教育科技方向硕士。用研究方法理解用户，用产品思维解决问题，用 AI 工具把想法做成原型。
-          </p>
-          <div class="resume-contacts">
-            <a href="mailto:3120252027@bit.edu.cn">3120252027@bit.edu.cn</a>
-            <span>·</span>
-            <a href="tel:+8615827329939">+86 158 2732 9939</a>
-            <span>·</span>
-            <a href="https://github.com/curlyy-031203" target="_blank" rel="noopener">github.com/curlyy-031203</a>
-            <span>·</span>
-            <a href="index.html" data-zh="作品集" data-en="Portfolio">作品集</a>
-          </div>
-        </div>
-        <a class="btn-pdf" href="assets/resume.pdf" target="_blank" rel="noopener">
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14">
-            <path d="M8 1v9m0 0l3-3m-3 3L5 7M2 13h12"/>
+  <main class="resume-viewer-wrap">
+    <div class="resume-viewer-head">
+      <div>
+        <h1 class="resume-viewer-title" data-zh="简历" data-en="Resume">简历</h1>
+        <p class="resume-viewer-sub"
+          data-zh="廖思嘉 · 教育科技方向硕士 · 求职意向：产品 / 运营"
+          data-en="Liao Sijia · EdTech master's · Seeking Product / Operations">
+          廖思嘉 · 教育科技方向硕士 · 求职意向：产品 / 运营
+        </p>
+      </div>
+      <div class="resume-viewer-actions">
+        <a class="resume-btn primary" href="assets/resume.pdf" download="廖思嘉-简历.pdf">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M8 2v8M8 10L5 7M8 10l3-3"/><path d="M3 13h10"/>
           </svg>
           <span data-zh="下载 PDF" data-en="Download PDF">下载 PDF</span>
         </a>
-      </header>
-
-      <!-- Education -->
-      <section class="resume-section reveal">
-        <h2 class="resume-section-title" data-zh="教育背景" data-en="Education">教育背景</h2>
-
-        <div class="resume-item">
-          <div class="resume-item-date">2025.09 — 2027.06</div>
-          <div>
-            <h3 class="resume-item-headline"
-              data-zh="北京理工大学 · 教育学 全日制硕士"
-              data-en="Beijing Institute of Technology · M.Ed. in Education">
-              北京理工大学 · 教育学 全日制硕士
-            </h3>
-            <p class="resume-item-sub"
-              data-zh="软科专业排名 16 · 教育技术方向"
-              data-en="ShanghaiRanking discipline rank #16 · Educational Technology focus">
-              软科专业排名 16 · 教育技术方向
-            </p>
-            <ul class="resume-item-list">
-              <li data-zh="核心修读：数字化转型背景下的教育发展、教育数据分析基础（SPSS 应用）、教育研究方法"
-                  data-en="Coursework: Digital transformation in education, Educational data analysis (SPSS), Educational research methods">
-                核心修读：数字化转型背景下的教育发展、教育数据分析基础（SPSS 应用）、教育研究方法
-              </li>
-              <li data-zh="硕士研究：基于 UTAUT2 模型与 PLS-SEM 方法，以学术诚信焦虑为中介变量，探究 AI 工具在教育场景的采纳机制与心理障碍"
-                  data-en="Thesis: Using UTAUT2 + PLS-SEM with academic-integrity anxiety as a mediating variable, investigating the adoption mechanism and psychological barriers of AI tools in educational settings">
-                硕士研究：基于 UTAUT2 模型与 PLS-SEM 方法，以学术诚信焦虑为中介变量，探究 AI 工具在教育场景的采纳机制与心理障碍
-              </li>
-              <li data-zh="学生工作：研究生会活动部部长，统筹策划&ldquo;秋雅集&rdquo;游园（50+ 人参与）与人文知识竞赛全流程项目管理"
-                  data-en="Student leadership: Head of Activities for the Graduate Student Union — organized the &ldquo;Qiuyaji&rdquo; garden event (50+ participants) and managed a humanities knowledge competition end-to-end">
-                学生工作：研究生会活动部部长，统筹策划&ldquo;秋雅集&rdquo;游园（50+ 人参与）与人文知识竞赛全流程项目管理
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="resume-item">
-          <div class="resume-item-date">2021.09 — 2025.06</div>
-          <div>
-            <h3 class="resume-item-headline"
-              data-zh="湖北第二师范学院 · 学前教育 本科"
-              data-en="Hubei University of Education · B.Ed. in Early Childhood Education">
-              湖北第二师范学院 · 学前教育 本科
-            </h3>
-            <p class="resume-item-sub"
-              data-zh="国家一流本科专业"
-              data-en="National First-Class Undergraduate Major">
-              国家一流本科专业
-            </p>
-            <ul class="resume-item-list">
-              <li data-zh="GPA 3.93/5.0（专业前 5%）· 英语 CET-6 550"
-                  data-en="GPA 3.93/5.0 (top 5%) · CET-6 score 550">
-                GPA 3.93/5.0（专业前 5%）· 英语 CET-6 550
-              </li>
-              <li data-zh="连续多年获得校级优秀共青团员、先进个人称号；具备扎实的教育心理学基础"
-                  data-en="Repeatedly awarded outstanding student honors; strong foundation in educational psychology">
-                连续多年获得校级优秀共青团员、先进个人称号；具备扎实的教育心理学基础
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <!-- Internships -->
-      <section class="resume-section reveal">
-        <h2 class="resume-section-title" data-zh="实习经历" data-en="Internships">实习经历</h2>
-
-        <div class="resume-item">
-          <div class="resume-item-date" data-zh="2026.04 — 至今" data-en="2026.04 — Present">2026.04 — 至今</div>
-          <div>
-            <h3 class="resume-item-headline"
-              data-zh="北京聪明核桃教育科技有限公司 · 学科运营实习生"
-              data-en="Walnut Programming · Subject Operations Intern">
-              北京聪明核桃教育科技有限公司 · 学科运营实习生
-            </h3>
-            <ul class="resume-item-list">
-              <li data-zh="服务流程优化与提效：针对入学测名单人工导入易漏、效率低的痛点，自主开发 2 个网页化自动表格工具，导入用户来源 Excel 即可一键生成剔除冗余信息的当日考试名单；将原本依赖逐次手写代码的临时流程固化为团队可复用工具，每周提效 40 分钟以上，并将名单遗漏导致的考生缺考、报班进度延误风险降至零"
-                  data-en="Process automation: Built 2 web-based automation tools that turn raw user-source Excel files into deduplicated, ready-to-import test rosters in one click. Replaced ad-hoc weekly scripting with a reusable team tool; saves 40+ minutes per week and reduced roster-omission risk (causing missed tests and class delays) to zero">
-                服务流程优化与提效：针对入学测名单人工导入易漏、效率低的痛点，自主开发 2 个网页化自动表格工具，导入用户来源 Excel 即可一键生成剔除冗余信息的当日考试名单；将原本依赖逐次手写代码的临时流程固化为团队可复用工具，每周提效 40 分钟以上，并将名单遗漏导致的考生缺考、报班进度延误风险降至零
-              </li>
-              <li data-zh="问题沉淀：面向 823 名一线班导收集高频咨询，结构化收敛为 10 条标准化 QA，统一对外沟通口径、降低重复响应成本，提升新人上手效率，建立问题反馈处理机制、沉淀典型解决方案"
-                  data-en="Knowledge consolidation: Collected the most frequent questions from 823 frontline class advisors, condensed them into 10 standardized QA entries that unified the team's external voice, reduced repeated-response cost, and accelerated newcomer onboarding">
-                问题沉淀：面向 823 名一线班导收集高频咨询，结构化收敛为 10 条标准化 QA，统一对外沟通口径、降低重复响应成本，提升新人上手效率，建立问题反馈处理机制、沉淀典型解决方案
-              </li>
-              <li data-zh="教务运营与数据复盘：负责 5 个班型、15 场入学测全流程维护，累计统计 450+ 名学生测试数据；独立开展成绩真实性校验、识别异常作答，保障测评结果可信"
-                  data-en="Academic operations: Owned end-to-end operations for 5 class tiers across 15 entrance-test sessions, processing 450+ student records. Independently ran score-authenticity checks and flagged anomalous responses to safeguard data integrity">
-                教务运营与数据复盘：负责 5 个班型、15 场入学测全流程维护，累计统计 450+ 名学生测试数据；独立开展成绩真实性校验、识别异常作答，保障测评结果可信
-              </li>
-              <li data-zh="赛事数据运营：统筹 15 场赛事的分数统计与维护，覆盖 500+ 名考生，确保赛事数据准确无误、按时交付"
-                  data-en="Competition data ops: Coordinated score statistics and maintenance across 15 competitions covering 500+ candidates, ensuring accuracy and on-time delivery">
-                赛事数据运营：统筹 15 场赛事的分数统计与维护，覆盖 500+ 名考生，确保赛事数据准确无误、按时交付
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="resume-item">
-          <div class="resume-item-date" data-zh="2026.03 — 至今" data-en="2026.03 — Present">2026.03 — 至今</div>
-          <div>
-            <h3 class="resume-item-headline"
-              data-zh="北京翼鸥教育科技（Classin） · HR 实习生（招聘）"
-              data-en="Yiou Education (Classin) · HR Intern, Recruiting">
-              北京翼鸥教育科技（Classin） · HR 实习生（招聘）
-            </h3>
-            <ul class="resume-item-list">
-              <li data-zh="全流程招聘交付：独立负责财务、法务、HRBP、销售、市场营销、AI 产品经理等多条业务线端到端招聘，覆盖渠道发布、简历筛选、面试协调、薪资谈判、背调跟进至入职培训完整链路，月均推进 10 名候选人入职"
-                  data-en="End-to-end recruiting delivery: Independently owned full-cycle hiring across finance, legal, HRBP, sales, marketing, and AI product manager pipelines &mdash; from channel posting and resume screening through interview coordination, salary negotiation, background check, and onboarding. ~10 candidate placements per month">
-                全流程招聘交付：独立负责财务、法务、HRBP、销售、市场营销、AI 产品经理等多条业务线端到端招聘，覆盖渠道发布、简历筛选、面试协调、薪资谈判、背调跟进至入职培训完整链路，月均推进 10 名候选人入职
-              </li>
-              <li data-zh="跨职能协作与候选人管理：同期并行推进多岗位招聘进程，协调业务部门与候选人双侧预期，独立完成薪资谈判与 offer 沟通，维护候选人全流程信息追踪，确保各节点无信息断层"
-                  data-en="Cross-functional coordination & candidate management: Ran multiple parallel hiring pipelines, aligned expectations between business units and candidates, independently led salary negotiations and offer conversations, and maintained end-to-end candidate tracking with zero information gaps">
-                跨职能协作与候选人管理：同期并行推进多岗位招聘进程，协调业务部门与候选人双侧预期，独立完成薪资谈判与 offer 沟通，维护候选人全流程信息追踪，确保各节点无信息断层
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="resume-item">
-          <div class="resume-item-date">2025.09 — 2026.02</div>
-          <div>
-            <h3 class="resume-item-headline"
-              data-zh="上海卓越睿新数码科技股份有限公司（智慧树） · 产品助理"
-              data-en="Zhihuishu · Product Assistant">
-              上海卓越睿新数码科技股份有限公司（智慧树） · 产品助理
-            </h3>
-            <ul class="resume-item-list">
-              <li data-zh="方法论沉淀与工具提效：自主探索 DeepSeek + XMind 结构化方法，独立设计从信息输入到思维导图自动生成的完整工作流并制作智能体，作为实习结项汇报的核心产物输出"
-                  data-en="Workflow design: Independently explored a DeepSeek + XMind structured method and designed an end-to-end agent workflow from raw input to auto-generated mind maps — delivered as the capstone of my internship">
-                方法论沉淀与工具提效：自主探索 DeepSeek + XMind 结构化方法，独立设计从信息输入到思维导图自动生成的完整工作流并制作智能体，作为实习结项汇报的核心产物输出
-              </li>
-              <li data-zh="教研产品评估与测试：深度拆解全球慕课大会 10 个优秀教学案例，全程跟进北大未来课堂从设计到落地的完整周期，提炼可复用教学设计逻辑、输入标准化评估模型；作为学生端/教师端双角色测试者，整理 15 条结构化改善建议反馈产品组"
-                  data-en="Product evaluation: Deep-analyzed 10 standout teaching cases from the global MOOC conference; followed Peking University's Future Classroom across its full design-to-launch cycle; distilled reusable instructional-design patterns into a standardized evaluation model. Tested as both student and instructor roles, returning 15 structured improvement suggestions to the product team">
-                教研产品评估与测试：深度拆解全球慕课大会 10 个优秀教学案例，全程跟进北大未来课堂从设计到落地的完整周期，提炼可复用教学设计逻辑、输入标准化评估模型；作为学生端/教师端双角色测试者，整理 15 条结构化改善建议反馈产品组
-              </li>
-              <li data-zh="合作机构项目落地与赋能：独立负责北体大、首师大、北大、协和医学院等高校智慧课程推文策划与项目申报书撰写，累计产出 5 篇推文及多份申报材料，提升品牌在目标高校的渗透"
-                  data-en="Partner enablement: Independently led course-feature articles and grant proposals for Beijing Sport University, Capital Normal University, Peking University, and Peking Union Medical College — 5 articles plus multiple proposal documents that improved brand penetration at target universities">
-                合作机构项目落地与赋能：独立负责北体大、首师大、北大、协和医学院等高校智慧课程推文策划与项目申报书撰写，累计产出 5 篇推文及多份申报材料，提升品牌在目标高校的渗透
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="resume-item">
-          <div class="resume-item-date">2025.07 — 2025.09</div>
-          <div>
-            <h3 class="resume-item-headline"
-              data-zh="清华大学教育学院 · 未来教育与学习课题组 · 教育创新驻校实习生"
-              data-en="Tsinghua University · Future Education & Learning Lab · Embedded Innovation Intern">
-              清华大学教育学院 · 未来教育与学习课题组 · 教育创新驻校实习生
-            </h3>
-            <ul class="resume-item-list">
-              <li data-zh="产品需求收集与反馈：深入实验校一线教学场景，系统收集教师使用痛点（如设备干扰等），结构化整理后反馈产品组，直接参与产品迭代输入"
-                  data-en="Field research: Embedded in pilot-school classrooms to systematically collect teachers' pain points (e.g., device interference), structured the findings, and fed them back to the product team as direct input for iteration">
-                产品需求收集与反馈：深入实验校一线教学场景，系统收集教师使用痛点（如设备干扰等），结构化整理后反馈产品组，直接参与产品迭代输入
-              </li>
-              <li data-zh="教研文档与跨团队协作：参与编写《课程与教学指南》，将真实使用场景转化为标准化操作说明；统筹高校团队与实验校教研协同，负责会议管理与进度追踪"
-                  data-en="Documentation & cross-team coordination: Co-authored the Curriculum & Teaching Guide, translating real classroom scenarios into standardized operating instructions. Coordinated between the university team and the pilot school, including meeting management and progress tracking">
-                教研文档与跨团队协作：参与编写《课程与教学指南》，将真实使用场景转化为标准化操作说明；统筹高校团队与实验校教研协同，负责会议管理与进度追踪
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <!-- Projects -->
-      <section class="resume-section reveal">
-        <h2 class="resume-section-title" data-zh="项目作品" data-en="Selected Projects">项目作品</h2>
-
-        <div class="resume-item">
-          <div class="resume-item-date" data-zh="2026.05 · 持续维护" data-en="2026.05 · Maintained">2026.05 · 持续维护</div>
-          <div>
-            <h3 class="resume-item-headline"
-              data-zh="入学测名单自动拆分工具 · 入学测成绩自动汇总工具"
-              data-en="Entrance-test Roster Splitter & Score Aggregator">
-              入学测名单自动拆分工具 · 入学测成绩自动汇总工具
-            </h3>
-            <p class="resume-item-sub"
-              data-zh="核桃编程入学测项目的两个标准化工具，从数据导入到成绩汇总形成闭环"
-              data-en="Two standardized tools for Walnut Programming's entrance-test program, closing the loop from roster import to score aggregation">
-              核桃编程入学测项目的两个标准化工具，从数据导入到成绩汇总形成闭环
-            </p>
-            <ul class="resume-item-list">
-              <li data-zh="单次处理时间从 30–40 分钟降至 3 分钟；两工具合计每周节省 3–4 小时重复劳动"
-                  data-en="Per-session processing time cut from 30–40 min to ~3 min; combined, the two tools save 3–4 hours of repetitive work each week">
-                单次处理时间从 30–40 分钟降至 3 分钟；两工具合计每周节省 3–4 小时重复劳动
-              </li>
-              <li data-zh="技术栈：纯前端 HTML/JS（GitHub Pages） + Python/Streamlit；详细案例见作品集"
-                  data-en="Stack: static front-end HTML/JS (GitHub Pages) + Python/Streamlit; full case studies in portfolio">
-                技术栈：纯前端 HTML/JS（GitHub Pages） + Python/Streamlit；详细案例见作品集
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="resume-item">
-          <div class="resume-item-date">2026.04</div>
-          <div>
-            <h3 class="resume-item-headline"
-              data-zh="AI 使用者类型测试 · 基于 UTAUT2 框架的互动测评"
-              data-en="AI Habits Quiz · UTAUT2-based interactive assessment">
-              AI 使用者类型测试 · 基于 UTAUT2 框架的互动测评
-            </h3>
-            <p class="resume-item-sub"
-              data-zh="把硕士论文使用的学术量表，重新设计为用户愿意主动参与的趣味测评"
-              data-en="A serious academic instrument from my thesis, redesigned as a quiz people actually want to take">
-              把硕士论文使用的学术量表，重新设计为用户愿意主动参与的趣味测评
-            </p>
-            <ul class="resume-item-list">
-              <li data-zh="洞察：传统问卷是单向付出；MBTI 之所以胜出，在于把&ldquo;被调查&rdquo;转化为&ldquo;被给予一份自我画像&rdquo;"
-                  data-en="Insight: traditional surveys are one-way extraction; MBTI wins by converting &ldquo;being surveyed&rdquo; into &ldquo;receiving a portrait of yourself&rdquo;">
-                洞察：传统问卷是单向付出；MBTI 之所以胜出，在于把&ldquo;被调查&rdquo;转化为&ldquo;被给予一份自我画像&rdquo;
-              </li>
-              <li data-zh="技术栈：纯前端原型 · 链接见作品集 / GitHub"
-                  data-en="Stack: front-end prototype · links in portfolio / GitHub">
-                技术栈：纯前端原型 · 链接见作品集 / GitHub
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <!-- Skills -->
-      <section class="resume-section reveal">
-        <h2 class="resume-section-title" data-zh="能力盘点" data-en="Skills">能力盘点</h2>
-
-        <div class="skill-grid">
-          <div class="skill-label" data-zh="研究方法" data-en="Research">研究方法</div>
-          <div class="skill-tags">
-            <span class="skill-tag">UTAUT2</span>
-            <span class="skill-tag">PLS-SEM</span>
-            <span class="skill-tag">SPSS</span>
-            <span class="skill-tag" data-zh="问卷设计" data-en="Survey design">问卷设计</span>
-            <span class="skill-tag" data-zh="统计建模" data-en="Statistical modeling">统计建模</span>
-            <span class="skill-tag" data-zh="用户访谈" data-en="User interviews">用户访谈</span>
-          </div>
-        </div>
-
-        <div class="skill-grid">
-          <div class="skill-label" data-zh="数据分析" data-en="Data">数据分析</div>
-          <div class="skill-tags">
-            <span class="skill-tag">Python</span>
-            <span class="skill-tag">LSTM</span>
-            <span class="skill-tag">Excel</span>
-            <span class="skill-tag" data-zh="数据可视化" data-en="Data viz">数据可视化</span>
-          </div>
-        </div>
-
-        <div class="skill-grid">
-          <div class="skill-label" data-zh="产品工具" data-en="Product">产品工具</div>
-          <div class="skill-tags">
-            <span class="skill-tag">Figma</span>
-            <span class="skill-tag">XMind</span>
-            <span class="skill-tag" data-zh="飞书多维表" data-en="Feishu Base">飞书多维表</span>
-            <span class="skill-tag" data-zh="Notion" data-en="Notion">Notion</span>
-          </div>
-        </div>
-
-        <div class="skill-grid">
-          <div class="skill-label" data-zh="动手实现" data-en="Build">动手实现</div>
-          <div class="skill-tags">
-            <span class="skill-tag">HTML/CSS/JS</span>
-            <span class="skill-tag">Streamlit</span>
-            <span class="skill-tag">GitHub Pages</span>
-            <span class="skill-tag">Claude Code</span>
-            <span class="skill-tag">DeepSeek</span>
-            <span class="skill-tag" data-zh="Vibe Coding" data-en="Vibe Coding">Vibe Coding</span>
-          </div>
-        </div>
-
-        <div class="skill-grid">
-          <div class="skill-label" data-zh="语言" data-en="Languages">语言</div>
-          <div class="skill-tags">
-            <span class="skill-tag" data-zh="中文 · 母语" data-en="Chinese · Native">中文 · 母语</span>
-            <span class="skill-tag" data-zh="英语 · CET-6 550" data-en="English · CET-6 550">英语 · CET-6 550</span>
-            <span class="skill-tag" data-zh="考研英语 70" data-en="GRE-equiv 70">考研英语 70</span>
-            <span class="skill-tag" data-zh="雅思 6.0" data-en="IELTS 6.0">雅思 6.0</span>
-          </div>
-        </div>
-      </section>
-
+        <a class="resume-btn" href="assets/resume.pdf" target="_blank" rel="noopener">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M6 3H3v10h10v-3"/><path d="M9 3h4v4"/><path d="M13 3L7 9"/>
+          </svg>
+          <span data-zh="新窗口打开" data-en="Open in new tab">新窗口打开</span>
+        </a>
+        <a class="resume-btn" href="index.html#work">
+          <span data-zh="← 返回作品集" data-en="← Back to Portfolio">← 返回作品集</span>
+        </a>
+      </div>
     </div>
+
+    <div class="resume-frame">
+      <!-- 直接嵌入原始 PDF，内容 100% 为你的原件，未做任何改动 -->
+      <iframe src="assets/resume.pdf#toolbar=1&navpanes=0&view=FitH"
+              title="廖思嘉简历 PDF"
+              loading="lazy"></iframe>
+    </div>
+    <p class="resume-mobile-hint"
+       data-zh="手机上预览可能不清晰，建议点上方「下载 PDF」或「新窗口打开」查看完整简历。"
+       data-en="On mobile the preview may be small — tap “Download PDF” or “Open in new tab” above for the full resume.">
+      手机上预览可能不清晰，建议点上方「下载 PDF」或「新窗口打开」查看完整简历。
+    </p>
   </main>
 
   <footer class="footer">
@@ -349,12 +163,31 @@
         <div style="display:flex; gap:24px;">
           <a href="mailto:3120252027@bit.edu.cn">3120252027@bit.edu.cn</a>
           <a href="https://github.com/curlyy-031203" target="_blank" rel="noopener">github.com/curlyy-031203</a>
-          <a href="index.html" data-zh="作品集 →" data-en="Portfolio →">作品集 →</a>
+          <a href="index.html#top" data-zh="作品集 →" data-en="Portfolio →">作品集 →</a>
         </div>
       </div>
     </div>
   </footer>
 
-  <script src="app.js"></script>
+  <script>
+  (function () {
+    'use strict';
+    var lang = 'zh';
+    var btn = document.querySelector('.lang-toggle');
+    function applyLang(l) {
+      lang = l;
+      document.documentElement.setAttribute('lang', l === 'zh' ? 'zh-CN' : 'en');
+      document.querySelectorAll('[data-zh][data-en]').forEach(function (el) {
+        var v = el.getAttribute(l === 'zh' ? 'data-zh' : 'data-en');
+        if (v !== null) { el.textContent = v; }
+      });
+      if (btn) { btn.textContent = (l === 'zh') ? 'EN' : '中'; }
+      var t = document.querySelector('title[data-zh][data-en]');
+      if (t) { document.title = t.getAttribute(l === 'zh' ? 'data-zh' : 'data-en'); }
+    }
+    if (btn) { btn.addEventListener('click', function () { applyLang(lang === 'zh' ? 'en' : 'zh'); }); }
+    applyLang('zh');
+  })();
+  </script>
 </body>
 </html>

@@ -10,7 +10,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -172,9 +172,9 @@
           <div class="how-row">
             <div class="how-row-label">课导答疑 / Advisor QA</div>
             <p class="how-row-body"
-              data-zh="面向 823 名一线班导收集高频咨询，结构化收敛为 10 条标准化 QA，统一对外口径。"
-              data-en="Collected the most frequent questions from 823 frontline class advisors, condensed them into 10 standardized QA entries that unified the team's external voice.">
-              面向 823 名一线班导收集高频咨询，结构化收敛为 10 条标准化 QA，统一对外口径。
+              data-zh="面向 823 名一线班导收集高频咨询，结构化收敛为 15 条标准化 QA，统一对外口径。"
+              data-en="Collected the most frequent questions from 823 frontline class advisors, condensed them into 15 standardized QA entries that unified the team's external voice.">
+              面向 823 名一线班导收集高频咨询，结构化收敛为 15 条标准化 QA，统一对外口径。
             </p>
           </div>
           <div class="how-row">
@@ -324,8 +324,8 @@
         <article class="case reveal">
           <div class="case-header">
             <div class="case-meta">
-              <span class="case-tag tag-ops">
-                <span data-zh="运营提效" data-en="Operations">运营提效</span>
+              <span class="case-tag tag-automation">
+                <span data-zh="数据自动化" data-en="Automation">数据自动化</span>
               </span>
               <h3 class="case-title"
                 data-zh="入学测成绩自动汇总工具"
@@ -591,6 +591,72 @@
     </div>
   </footer>
 
-  <script src="app.js"></script>
+  <script>
+  (function () {
+    'use strict';
+
+    /* ---------- 1. Reveal on scroll ---------- */
+    var revealEls = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            var d = e.target.getAttribute('data-delay');
+            if (d) { e.target.style.setProperty('--reveal-delay', d + 'ms'); }
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+      revealEls.forEach(function (el) { io.observe(el); });
+    } else {
+      /* 老浏览器兜底:直接全部显示 */
+      revealEls.forEach(function (el) { el.classList.add('in'); });
+    }
+
+    /* ---------- 2. Language toggle (ZH <-> EN) ---------- */
+    var lang = 'zh';
+    var btn = document.querySelector('.lang-toggle');
+
+    function applyLang(l) {
+      lang = l;
+      document.documentElement.setAttribute('lang', l === 'zh' ? 'zh-CN' : 'en');
+
+      /* 普通文本节点:用 textContent */
+      document.querySelectorAll('[data-zh][data-en]').forEach(function (el) {
+        /* 若同时存在 data-html-* 则交给下面的 innerHTML 分支处理,跳过 */
+        if (el.hasAttribute('data-html-zh') || el.hasAttribute('data-html-en')) return;
+        var v = el.getAttribute(l === 'zh' ? 'data-zh' : 'data-en');
+        if (v !== null) { el.textContent = v; }
+      });
+
+      /* 富文本节点(含 <strong> 等):用 innerHTML */
+      document.querySelectorAll('[data-html-zh], [data-html-en]').forEach(function (el) {
+        var v = el.getAttribute(l === 'zh' ? 'data-html-zh' : 'data-html-en');
+        /* 回退:某语言若没写 data-html-* 就用对应的 data-* */
+        if (v === null) { v = el.getAttribute(l === 'zh' ? 'data-zh' : 'data-en'); }
+        if (v !== null) { el.innerHTML = v; }
+      });
+
+      /* 按钮显示"切换到的目标语言" */
+      if (btn) { btn.textContent = (l === 'zh') ? 'EN' : '中'; }
+
+      /* <title> 也跟着切 */
+      var titleEl = document.querySelector('title[data-zh][data-en]');
+      if (titleEl) {
+        document.title = titleEl.getAttribute(l === 'zh' ? 'data-zh' : 'data-en');
+      }
+    }
+
+    if (btn) {
+      btn.addEventListener('click', function () {
+        applyLang(lang === 'zh' ? 'en' : 'zh');
+      });
+    }
+
+    /* 初始为中文 */
+    applyLang('zh');
+  })();
+  </script>
 </body>
 </html>

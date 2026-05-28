@@ -31,15 +31,21 @@
   --pastel-blue-text: #1F6C9F;
   --pastel-yellow-bg: #FBF3DB;
   --pastel-yellow-text: #956400;
+  --pastel-teal-bg: #DDF2EE;
+  --pastel-teal-text: #156B5C;
 
-  /* Typography stacks
-     Latin chars use Instrument Serif for editorial headings; Chinese chars
-     fall through to PingFang SC (sans) — never to Songti, which feels dated. */
+  /* Typography stacks — clean sans across the board (tech-utility direction).
+     Latin: Geist (loaded via webfont). Chinese: system sans — PingFang SC on
+     Apple, Microsoft YaHei on Windows. No serif, no italics anywhere.
+     --font-display is the SAME sans, kept as a separate token only so the
+     "headline" role stays semantically distinct and tunable later. */
   --font-sans: "Geist", system-ui, -apple-system, "Segoe UI Variable", "Segoe UI",
                "Helvetica Neue", "PingFang SC", "Microsoft YaHei",
                "Source Han Sans CN", "Hiragino Sans GB", sans-serif;
-  --font-serif: "Instrument Serif", "Newsreader", Georgia,
-                "PingFang SC", "Microsoft YaHei", "Source Han Sans CN", sans-serif;
+  --font-display: var(--font-sans);
+  /* Back-compat: existing rules still reference --font-serif. Point it at the
+     sans stack so nothing renders in a serif/italic face. */
+  --font-serif: var(--font-sans);
   --font-mono: "Geist Mono", "SF Mono", "JetBrains Mono", "Cascadia Mono",
                Menlo, Consolas, monospace;
 
@@ -150,11 +156,10 @@ section {
 }
 
 .nav-logo {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: 18px;
   letter-spacing: -0.01em;
-  font-weight: 400;
-  font-style: italic;
+  font-weight: 500;
 }
 
 .nav-links {
@@ -257,16 +262,17 @@ section {
 }
 
 .hero-title {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: clamp(40px, 6vw, 64px);
-  line-height: 1.05;
+  line-height: 1.08;
   letter-spacing: -0.03em;
-  font-weight: 400;
+  font-weight: 600;
   margin-bottom: var(--space-5);
 }
 
 .hero-title em {
-  font-style: italic;
+  font-style: normal;
+  font-weight: 600;
   color: var(--accent);
 }
 
@@ -420,16 +426,16 @@ section {
 }
 
 .how-summary {
-  font-family: var(--font-serif);
-  font-size: 22px;
-  line-height: 1.4;
+  font-family: var(--font-display);
+  font-size: 20px;
+  line-height: 1.5;
   letter-spacing: -0.01em;
   color: var(--text);
   margin-top: var(--space-10);
-  padding: var(--space-6) var(--space-8);
-  background: var(--accent-soft-bg);
-  border-radius: 8px;
-  font-style: italic;
+  padding: var(--space-2) 0 var(--space-2) var(--space-6);
+  border-left: 3px solid var(--accent);
+  font-style: normal;
+  font-weight: 500;
 }
 
 /* ============================================================
@@ -467,6 +473,7 @@ section {
 }
 
 .case-tag.tag-ops { background: var(--pastel-blue-bg); color: var(--pastel-blue-text); }
+.case-tag.tag-automation { background: var(--pastel-teal-bg); color: var(--pastel-teal-text); }
 .case-tag.tag-product { background: var(--accent-soft-bg); color: var(--accent-soft-text); }
 .case-tag.tag-research { background: var(--pastel-yellow-bg); color: var(--pastel-yellow-text); }
 .case-tag.tag-personal { background: var(--pastel-red-bg); color: var(--pastel-red-text); }
@@ -511,7 +518,6 @@ section {
 }
 
 .case-note {
-  font-style: italic;
   color: var(--text-tertiary);
 }
 
@@ -596,12 +602,15 @@ section {
 }
 
 .outcome-stat-value {
-  font-family: var(--font-serif);
-  font-size: 32px;
+  font-family: var(--font-display);
+  font-size: 42px;
   line-height: 1;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+  font-weight: 600;
   color: var(--accent);
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-3);
+  font-feature-settings: "tnum" 1, "ss01" 1;
+  font-variant-numeric: tabular-nums;
 }
 
 .outcome-stat-label {
@@ -817,7 +826,7 @@ section {
 
 .resume-item {
   display: grid;
-  grid-template-columns: 160px 1fr;
+  grid-template-columns: 180px 1fr;
   gap: var(--space-6);
   padding-bottom: var(--space-8);
 }
@@ -872,7 +881,7 @@ section {
 
 .skill-grid {
   display: grid;
-  grid-template-columns: 160px 1fr;
+  grid-template-columns: 180px 1fr;
   gap: var(--space-6);
   padding-bottom: var(--space-5);
 }
