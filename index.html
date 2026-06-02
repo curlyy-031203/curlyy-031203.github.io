@@ -474,7 +474,6 @@
         <!-- WORK cluster shapes -->
         <rect class="mapnode work hinge-hit" x="40" y="90" width="150" height="48" rx="10"/>
         <rect class="mapnode work" x="40" y="158" width="150" height="48" rx="10"/>
-        <path id="pipe" d="M115 138 L 115 158" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#arr)"/>
         <!-- HINGE shape -->
         <rect class="mapnode hinge hinge-hit" x="275" y="124" width="150" height="56" rx="12"/>
         <!-- SELF cluster shapes -->
@@ -484,14 +483,16 @@
         <path d="M190 150 C 230 150, 245 152, 275 152" stroke="var(--ink-faint)" stroke-width="1.3" fill="none" opacity=".5"/>
         <path d="M425 152 C 460 152, 475 150, 510 132" stroke="var(--ink-faint)" stroke-width="1.3" fill="none" opacity=".5"/>
         <path d="M425 156 C 460 165, 475 175, 510 178" stroke="var(--ink-faint)" stroke-width="1.3" fill="none" opacity=".5"/>
-        <!-- axis -->
+        </g>
+
+        <!-- 功能性箭头：不进手绘抖动滤镜，保持笔直 -->
+        <path id="pipe" d="M115 138 L 115 158" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#arr)"/>
         <line class="axis" x1="40" y1="250" x2="660" y2="250"/>
         <polygon points="660,250 652,246 652,254" fill="var(--ink-faint)" opacity=".4"/>
-        </g>
 
         <!-- TEXT layer (crisp, not roughened) -->
         <g dominant-baseline="central">
-        <text x="350" y="26" text-anchor="middle" class="msub" style="font-size:12px;fill:var(--accent)">同一个本能 · 发现持续消耗 → 搭一次性结构去除它</text>
+        <text x="350" y="52" text-anchor="middle" class="msub" style="font-size:12px;fill:var(--accent)">同一个本能 · 发现持续消耗 → 搭一次性结构去除它</text>
         <text class="mtext" x="115" y="108" text-anchor="middle">名单拆分工具</text><text class="msub" x="115" y="125" text-anchor="middle">导入端</text>
         <text class="mtext" x="115" y="176" text-anchor="middle">成绩汇总工具</text><text class="msub" x="115" y="193" text-anchor="middle">汇总端</text>
         <text class="msub" x="128" y="148" style="fill:var(--accent)">闭环</text>
@@ -508,8 +509,8 @@
 
         <!-- 小彩蛋：hover 图谱时，枢纽旁冒出一句手绘批注 -->
         <g class="egg">
-          <path d="M350 186 C 352 198, 360 204, 372 206" filter="url(#rough)"/>
-          <text x="378" y="210">← 把学术研究和产品打通的那一个</text>
+          <path d="M350 184 C 347 197, 351 208, 350 216" filter="url(#rough)"/>
+          <text x="350" y="232" text-anchor="middle">↑ 把学术研究和产品打通的那一个</text>
         </g>
 
         <!-- flowing dot on pipeline -->
