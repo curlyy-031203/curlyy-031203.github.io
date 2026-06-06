@@ -286,6 +286,9 @@
     background:linear-gradient(95deg,rgba(12,10,9,.93),rgba(12,10,9,.6) 38%,transparent 76%),
                linear-gradient(180deg,transparent 58%,rgba(12,10,9,.62))}
   header .wrap{position:relative;z-index:2}
+  /* pre-hide hero for the GSAP entrance (falls back to CSS rise if GSAP absent) */
+  .pre-gsap .hero-status,.pre-gsap header h1,.pre-gsap .hero-term,
+  .pre-gsap .lede,.pre-gsap .hero-meta{animation:none!important;opacity:0}
 
   /* custom cursor */
   .cur-ring{position:fixed;top:0;left:0;width:30px;height:30px;border:1px solid var(--accent);border-radius:50%;z-index:95;pointer-events:none;transform:translate(-50%,-50%);opacity:.7}
@@ -396,6 +399,8 @@
     #gl,#fx{display:none}
   }
 </style>
+<script>/* pre-hide hero only when we'll GSAP-animate it (not under reduced motion) */
+(function(){try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('pre-gsap');}catch(e){}})();</script>
 </head>
 <body>
 <canvas id="gl"></canvas>
@@ -744,6 +749,7 @@
 
 <!-- ===== Dark-tech effect layer: shader bg · particles · cursor · decode ===== -->
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrambleTextPlugin.min.js"></script>
 <script>
 var REDUCE=false;try{REDUCE=matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){}
@@ -819,12 +825,34 @@ var REDUCE=false;try{REDUCE=matchMedia('(prefers-reduced-motion: reduce)').match
   });
 })();
 
-/* 4. Terminal decode (ScrambleText) once fonts are ready */
+/* 4. Polished hero entrance — choreographed GSAP timeline
+      (name reveals char-by-char behind a mask; terminal line decodes) */
 (function(){
-  if(REDUCE||!window.gsap||!window.ScrambleTextPlugin) return;
-  gsap.registerPlugin(window.ScrambleTextPlugin);
-  function run(){var ty=document.querySelector('.hero-term .type');if(!ty)return;var txt=ty.textContent;
-    gsap.to(ty,{duration:1.7,delay:.5,scrambleText:{text:txt,chars:'01<>/{}#你他用是',speed:.5,revealDelay:.15}});}
+  var docEl=document.documentElement;
+  if(REDUCE||!window.gsap){docEl.classList.remove('pre-gsap');return;}
+  if(window.SplitText) gsap.registerPlugin(window.SplitText);
+  if(window.ScrambleTextPlugin) gsap.registerPlugin(window.ScrambleTextPlugin);
+  function run(){
+    var h1=document.querySelector('header h1');
+    var tl=gsap.timeline({defaults:{ease:'expo.out'}});
+    tl.fromTo('.hero-status',{opacity:0,y:16},{opacity:1,y:0,duration:.7},0);
+    // name: per-character mask reveal (solid color → SplitText is safe here)
+    var done=false;
+    if(window.SplitText&&h1){
+      try{var s=SplitText.create(h1,{type:'chars',mask:'chars'});
+        if(s.chars&&s.chars.length){gsap.set(h1,{opacity:1});
+          tl.from(s.chars,{yPercent:118,opacity:0,duration:1.1,stagger:.09,ease:'power4.out'},.16);done=true;}
+      }catch(e){}
+    }
+    if(!done&&h1) tl.fromTo(h1,{opacity:0,y:42},{opacity:1,y:0,duration:1},.16);
+    tl.fromTo('.hero-term',{opacity:0,y:16},{opacity:1,y:0,duration:.7},'-=.75');
+    var ty=document.querySelector('.hero-term .type');
+    if(ty&&window.ScrambleTextPlugin){var txt=ty.textContent;
+      tl.to(ty,{duration:1.5,scrambleText:{text:txt,chars:'01<>/{}#你他用是',speed:.5,revealDelay:.1}},'-=.35');}
+    tl.fromTo('.lede',{opacity:0,y:18},{opacity:1,y:0,duration:.85},'-=1.05');
+    tl.set('.hero-meta',{opacity:1},'-=.7')
+      .fromTo('.hero-meta>*',{opacity:0,y:14},{opacity:1,y:0,duration:.6,stagger:.09,clearProps:'opacity'},'<');
+  }
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(run);else run();
 })();
 </script>
