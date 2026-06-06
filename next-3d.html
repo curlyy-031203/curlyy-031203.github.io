@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>方案 D · Three.js 3D · 廖思嘉</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500&family=Noto+Serif+SC:wght@600;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0c0a09;--ink:#ece6df;--ink-soft:#a89f94;--ink-faint:#766c62;--accent:#d4663c;--accent-bright:#e8855a;--teal:#5ab3a4;--line:rgba(226,196,170,.14);--line2:rgba(226,196,170,.26);--maxw:1080px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{min-height:100vh;background:var(--bg);color:var(--ink);overflow-x:hidden;cursor:none;font-family:"Noto Sans SC",sans-serif;font-weight:300;line-height:1.9;font-size:16px;-webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(50% 60% at 78% 42%,rgba(212,102,60,.10),transparent 70%)}
+  a{cursor:none;color:inherit;text-decoration:none}
+  #three{position:fixed;inset:0;z-index:0;display:block}
+  .scrim{position:fixed;inset:0;z-index:1;pointer-events:none;background:linear-gradient(95deg,rgba(12,10,9,.82),rgba(12,10,9,.3) 40%,transparent 70%)}
+  nav,header{position:relative;z-index:3}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 30px}
+  .mono{font-family:"JetBrains Mono",monospace}
+  .cur-ring{position:fixed;top:0;left:0;width:30px;height:30px;border:1px solid var(--accent);border-radius:50%;z-index:95;pointer-events:none;transform:translate(-50%,-50%);opacity:.7}
+  .cur-dot{position:fixed;top:0;left:0;width:4px;height:4px;background:var(--accent-bright);border-radius:50%;z-index:96;pointer-events:none;transform:translate(-50%,-50%)}
+  nav{backdrop-filter:blur(10px);background:rgba(12,10,9,.55);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+  nav .name{font-size:15px}nav .name b{font-weight:500}
+  nav .links{display:flex;gap:26px;font-size:14px;color:var(--ink-soft)}nav .links a:hover{color:var(--accent)}
+  header{padding:130px 0 120px}
+  .badge{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);border:1px solid var(--line2);border-radius:100px;padding:5px 12px;margin-bottom:24px}
+  .status{display:flex;align-items:center;gap:10px;font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:1px;color:var(--ink-soft);text-transform:uppercase;margin-bottom:30px}
+  .status .dot{width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 9px var(--teal);animation:pulse 2.6s infinite}
+  @keyframes pulse{0%,100%{opacity:.5}50%{opacity:1}}
+  h1{font-family:"Noto Serif SC",serif;font-weight:700;font-size:clamp(56px,9vw,104px);line-height:1;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px}
+  .term{margin-top:22px;display:inline-flex;align-items:baseline;font-family:"JetBrains Mono",monospace;font-size:clamp(15px,1.8vw,19px);color:var(--ink);background:rgba(8,7,14,.5);border:1px solid var(--line);border-radius:10px;padding:13px 18px}
+  .term .pr{color:var(--accent);margin-right:6px}
+  .term .caret{display:inline-block;width:8px;height:1.05em;background:var(--accent);vertical-align:-2px;margin-left:5px;box-shadow:0 0 8px var(--accent);animation:blink 1.05s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .lede{font-size:clamp(17px,1.9vw,20px);color:var(--ink-soft);max-width:54ch;margin-top:28px;line-height:1.75}
+  .actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:42px;align-items:center}
+  .btn{font-family:"JetBrains Mono",monospace;font-size:13px;padding:13px 22px;border-radius:8px;transition:.25s}
+  .btn-primary{background:var(--accent);color:#1a0d07;font-weight:500;will-change:transform}.btn-primary:hover{background:var(--accent-bright)}
+  .btn-ghost{border:1px solid var(--line2);color:var(--ink-soft)}.btn-ghost:hover{color:var(--ink);border-color:var(--ink-soft)}
+  .hint{position:fixed;bottom:18px;left:0;right:0;text-align:center;z-index:3;font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--ink-faint)}
+  @media(prefers-reduced-motion:reduce){body{cursor:auto}.cur-ring,.cur-dot{display:none}}
+</style>
+</head>
+<body>
+<canvas id="three"></canvas>
+<div class="scrim"></div>
+<div class="cur-ring" id="ring"></div><div class="cur-dot" id="dot"></div>
+
+<nav><div class="wrap"><span class="name"><b>廖思嘉</b>&nbsp;&nbsp;Liao Sijia</span>
+  <div class="links"><a href="#">关于</a><a href="#">案例</a><a href="#">作品体</a><a href="#">简历</a></div></div></nav>
+
+<header><div class="wrap">
+  <span class="badge mono">方案 D · Three.js 真 3D</span>
+  <div class="status mono"><i class="dot"></i>5 services live · github pages / vercel / streamlit</div>
+  <h1>廖思嘉</h1>
+  <div class="term"><span class="pr">~</span><span class="type">把判断直接变成可运行的原型</span><span class="caret"></span></div>
+  <p class="lede">教育科技方向硕士。用研究方法理解用户，用产品思维判断什么值得做，用 AI 工具自己把想法做成可运行的原型。</p>
+  <div class="actions"><a class="btn btn-primary" href="#">看核心案例 →</a><a class="btn btn-ghost" href="#">查看简历</a></div>
+</div></header>
+<div class="hint mono">↑ 移动鼠标，3D 几何体随之转动</div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrambleTextPlugin.min.js"></script>
+<script>
+var REDUCE=false;try{REDUCE=matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){}
+
+/* Three.js — wireframe icosahedron + point cloud, rotates toward the cursor */
+(function(){
+  if(REDUCE||!window.THREE){return;}
+  var cv=document.getElementById('three');
+  var renderer=new THREE.WebGLRenderer({canvas:cv,alpha:true,antialias:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  var scene=new THREE.Scene();
+  var cam=new THREE.PerspectiveCamera(45,innerWidth/innerHeight,0.1,100);cam.position.z=6;
+  var group=new THREE.Group();scene.add(group);
+  var geo=new THREE.IcosahedronGeometry(2.05,1);
+  // glowing wireframe
+  var wire=new THREE.LineSegments(new THREE.WireframeGeometry(geo),new THREE.LineBasicMaterial({color:0xe8855a,transparent:true,opacity:0.55}));
+  group.add(wire);
+  // faint inner solid for depth
+  var solid=new THREE.Mesh(geo,new THREE.MeshBasicMaterial({color:0xd4663c,transparent:true,opacity:0.06}));
+  group.add(solid);
+  // vertex points
+  var pts=new THREE.Points(geo,new THREE.PointsMaterial({color:0xffb27a,size:0.06,transparent:true,opacity:0.9}));
+  group.add(pts);
+  // a second, larger faint shell that counter-rotates
+  var shell=new THREE.LineSegments(new THREE.WireframeGeometry(new THREE.IcosahedronGeometry(2.8,1)),new THREE.LineBasicMaterial({color:0xd4663c,transparent:true,opacity:0.16}));
+  group.add(shell);
+
+  function place(){var off=innerWidth>900?2.0:0;group.position.x=off;}
+  function resize(){renderer.setSize(innerWidth,innerHeight);cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();place();}
+  resize();addEventListener('resize',resize);
+  var tx=0,ty=0,mx=0,my=0;
+  addEventListener('mousemove',function(e){tx=(e.clientX/innerWidth-0.5);ty=(e.clientY/innerHeight-0.5);});
+  (function loop(){
+    mx+=(tx-mx)*0.05;my+=(ty-my)*0.05;
+    group.rotation.y+=0.0032; group.rotation.x+=0.0012;
+    group.rotation.y+=mx*0.04; group.rotation.x+=my*0.04;
+    shell.rotation.y-=0.004; shell.rotation.z+=0.002;
+    var s=1+Math.sin(performance.now()*0.0012)*0.03; group.scale.set(s,s,s);
+    renderer.render(scene,cam);requestAnimationFrame(loop);
+  })();
+})();
+if(REDUCE){document.getElementById('three').style.background='radial-gradient(40% 50% at 75% 45%,rgba(212,102,60,.18),transparent 70%)';}
+
+/* cursor + magnetic + decode */
+(function(){
+  if(REDUCE||!window.gsap)return;
+  var ring=document.getElementById('ring'),dot=document.getElementById('dot');
+  var rx=gsap.quickTo(ring,'x',{duration:.4,ease:'power3'}),ry=gsap.quickTo(ring,'y',{duration:.4,ease:'power3'});
+  var dx=gsap.quickTo(dot,'x',{duration:.12,ease:'power3'}),dy=gsap.quickTo(dot,'y',{duration:.12,ease:'power3'});
+  addEventListener('mousemove',function(e){rx(e.clientX);ry(e.clientY);dx(e.clientX);dy(e.clientY);});
+  document.querySelectorAll('a,.btn').forEach(function(el){el.addEventListener('mouseenter',function(){gsap.to(ring,{scale:1.7,duration:.3});});el.addEventListener('mouseleave',function(){gsap.to(ring,{scale:1,duration:.3});});});
+  var mag=document.querySelector('.btn-primary');var mxT=gsap.quickTo(mag,'x',{duration:.4,ease:'power3'}),myT=gsap.quickTo(mag,'y',{duration:.4,ease:'power3'});
+  mag.addEventListener('mousemove',function(e){var r=mag.getBoundingClientRect();mxT((e.clientX-(r.left+r.width/2))*.4);myT((e.clientY-(r.top+r.height/2))*.4);});
+  mag.addEventListener('mouseleave',function(){mxT(0);myT(0);});
+  if(window.ScrambleTextPlugin){gsap.registerPlugin(window.ScrambleTextPlugin);
+    var ty=document.querySelector('.type'),txt=ty.textContent;
+    var go=function(){gsap.from('h1',{opacity:0,y:30,duration:1,ease:'expo.out'});
+      gsap.to(ty,{duration:1.6,delay:.4,scrambleText:{text:txt,chars:'01<>/{}#你他用是',speed:.5,revealDelay:.1}});};
+    if(document.fonts&&document.fonts.ready)document.fonts.ready.then(go);else go();}
+})();
+</script>
+</body>
+</html>
