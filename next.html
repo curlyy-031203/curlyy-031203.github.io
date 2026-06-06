@@ -287,7 +287,7 @@
                linear-gradient(180deg,transparent 58%,rgba(12,10,9,.62))}
   header .wrap{position:relative;z-index:2}
   /* pre-hide hero for the GSAP entrance (falls back to CSS rise if GSAP absent) */
-  .pre-gsap .hero-status,.pre-gsap header h1,.pre-gsap .hero-term,
+  .pre-gsap .hero-status,.pre-gsap .hero-term,
   .pre-gsap .lede,.pre-gsap .hero-meta{animation:none!important;opacity:0}
 
   /* custom cursor */
@@ -299,6 +299,10 @@
   nav .links a:hover{color:var(--accent)}
 
   h1{color:var(--ink)}
+  /* particle name canvas (real text kept for screen readers / SEO) */
+  .pname{opacity:1!important;animation:none!important;margin:0 0 6px;line-height:1}
+  .pname .sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  #pcanvas{display:block}
   .hero-status{color:var(--teal);background:rgba(90,179,164,.08);border:1px solid rgba(90,179,164,.28)}
   .hero-status:hover{background:rgba(90,179,164,.14);border-color:rgba(90,179,164,.5);box-shadow:0 8px 24px -14px rgba(90,179,164,.5)}
   .hero-status .dot{background:var(--teal);box-shadow:0 0 9px var(--teal)}
@@ -425,7 +429,7 @@
 <header>
   <div class="wrap">
     <a class="hero-status" href="#case-1" title="跳到第一个案例"><i class="dot"></i>5 SERVICES LIVE · GitHub Pages / Vercel / Streamlit<span class="go">→</span></a>
-    <h1>廖思嘉</h1>
+    <h1 class="pname"><span class="sr">廖思嘉</span><canvas id="pcanvas" aria-hidden="true"></canvas></h1>
     <div class="hero-term"><span class="pr">~ </span><span class="type">把判断直接变成可运行的原型</span><span class="caret"></span></div>
     <p class="lede">教育科技方向硕士。用研究方法理解用户，用产品思维判断什么值得做，用 AI 工具自己把想法做成可运行的原型。</p>
     <div class="hero-meta">
@@ -844,27 +848,7 @@ var REDUCE=false;try{REDUCE=matchMedia('(prefers-reduced-motion: reduce)').match
     var h1=document.querySelector('header h1');
     var tl=gsap.timeline({defaults:{ease:'expo.out'}});
     tl.fromTo('.hero-status',{opacity:0,y:16},{opacity:1,y:0,duration:.7},0);
-    // name: per-character reveal (no mask, so chars can be repelled later)
-    var done=false,nameChars=null;
-    if(window.SplitText&&h1){
-      try{var s=SplitText.create(h1,{type:'chars'});
-        if(s.chars&&s.chars.length){gsap.set(h1,{opacity:1});nameChars=s.chars;
-          tl.from(s.chars,{yPercent:72,opacity:0,duration:1,stagger:.09,ease:'power4.out'},.16);done=true;}
-      }catch(e){}
-    }
-    if(!done&&h1) tl.fromTo(h1,{opacity:0,y:42},{opacity:1,y:0,duration:1},.16);
-
-    // hero interaction: name characters magnetically repel the cursor, then settle
-    if(nameChars){
-      var hdr=document.querySelector('header'),live=false;
-      var qs=nameChars.map(function(c){return {x:gsap.quickTo(c,'x',{duration:.5,ease:'power3'}),y:gsap.quickTo(c,'y',{duration:.5,ease:'power3'})};});
-      tl.eventCallback('onComplete',function(){live=true;});
-      hdr.addEventListener('mousemove',function(e){ if(!live)return;
-        nameChars.forEach(function(c,i){var r=c.getBoundingClientRect();var dx=(r.left+r.width/2)-e.clientX,dy=(r.top+r.height/2)-e.clientY,d=Math.hypot(dx,dy)||1,R=170;
-          if(d<R){var f=(1-d/R)*44;qs[i].x(dx/d*f);qs[i].y(dy/d*f);}else{qs[i].x(0);qs[i].y(0);}});
-      });
-      hdr.addEventListener('mouseleave',function(){nameChars.forEach(function(c,i){qs[i].x(0);qs[i].y(0);});});
-    }
+    // (the big name is rendered as an interactive particle field — see module 4c)
     tl.fromTo('.hero-term',{opacity:0,y:16},{opacity:1,y:0,duration:.7},'-=.75');
     var ty=document.querySelector('.hero-term .type');
     if(ty&&window.ScrambleTextPlugin){var txt=ty.textContent;
@@ -874,6 +858,58 @@ var REDUCE=false;try{REDUCE=matchMedia('(prefers-reduced-motion: reduce)').match
       .fromTo('.hero-meta>*',{opacity:0,y:14},{opacity:1,y:0,duration:.6,stagger:.09,clearProps:'opacity'},'<');
   }
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(run);else run();
+})();
+
+/* 4c. Particle name — "廖思嘉" built from glowing points; assembles in,
+       scatters under the cursor, flows back and reforms */
+(function(){
+  var cv=document.getElementById('pcanvas'); if(!cv) return;
+  var ctx=cv.getContext('2d'); var dpr=Math.min(window.devicePixelRatio||1,2);
+  var TEXT='廖思嘉', pts=[], mouse={x:-9999,y:-9999};
+  function fontSize(){return Math.min(96,Math.max(46,Math.round(innerWidth*0.115)));}
+  function build(){
+    var fs=fontSize();
+    var off=document.createElement('canvas'),octx=off.getContext('2d');
+    octx.font='700 '+fs+'px "Noto Serif SC", serif';
+    var w=Math.ceil(octx.measureText(TEXT).width)+12, h=Math.ceil(fs*1.28);
+    cv.style.width=w+'px';cv.style.height=h+'px';cv.width=w*dpr;cv.height=h*dpr;
+    off.width=w*dpr;off.height=h*dpr;
+    octx.scale(dpr,dpr);octx.font='700 '+fs+'px "Noto Serif SC", serif';
+    octx.fillStyle='#fff';octx.textBaseline='middle';octx.fillText(TEXT,6,h/2);
+    var img=octx.getImageData(0,0,off.width,off.height).data;
+    var gap=Math.max(3,Math.round(3.4*dpr)),np=[];
+    for(var y=0;y<off.height;y+=gap)for(var x=0;x<off.width;x+=gap){
+      if(img[(y*off.width+x)*4+3]>130) np.push({hx:x,hy:y,
+        x:pts.length?undefined:Math.random()*cv.width, y:Math.random()*cv.height,vx:0,vy:0});
+    }
+    // keep current positions on resize where possible; init new ones scattered
+    np.forEach(function(p){if(p.x===undefined){p.x=Math.random()*cv.width;}});
+    pts=np;
+  }
+  function loop(){
+    ctx.clearRect(0,0,cv.width,cv.height);
+    var R=56*dpr;
+    for(var i=0;i<pts.length;i++){var p=pts[i];
+      p.vx+=(p.hx-p.x)*0.02; p.vy+=(p.hy-p.y)*0.02;
+      var dx=p.x-mouse.x,dy=p.y-mouse.y,d=Math.hypot(dx,dy);
+      if(d<R){var f=(1-d/R)*6.0;p.vx+=dx/(d||1)*f;p.vy+=dy/(d||1)*f;}
+      p.vx*=0.85;p.vy*=0.85;p.x+=p.vx;p.y+=p.vy;
+      ctx.fillStyle=(i&7)?'#d4663c':'#e8855a';
+      ctx.fillRect(p.x,p.y,1.7*dpr,1.7*dpr);
+    }
+    requestAnimationFrame(loop);
+  }
+  function pos(e){var r=cv.getBoundingClientRect();mouse.x=(e.clientX-r.left)*dpr;mouse.y=(e.clientY-r.top)*dpr;}
+  function drawStatic(){var fs=fontSize();ctx.font='700 '+fs+'px "Noto Serif SC",serif';
+    var w=Math.ceil(ctx.measureText(TEXT).width)+12,h=Math.ceil(fs*1.28);
+    cv.style.width=w+'px';cv.style.height=h+'px';cv.width=w*dpr;cv.height=h*dpr;ctx.scale(dpr,dpr);
+    ctx.font='700 '+fs+'px "Noto Serif SC",serif';ctx.fillStyle='#ece6df';ctx.textBaseline='middle';ctx.fillText(TEXT,6,h/2);}
+  function go(){build();loop();
+    window.addEventListener('mousemove',pos);
+    cv.addEventListener('mouseleave',function(){mouse.x=mouse.y=-9999;});
+    var rt;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(build,200);});}
+  var start=REDUCE?drawStatic:go;
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(start);else setTimeout(start,300);
 })();
 
 /* 5. Cards — deal-in on scroll + 3D tilt + cursor glare */
