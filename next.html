@@ -287,7 +287,7 @@
                linear-gradient(180deg,transparent 58%,rgba(12,10,9,.62))}
   header .wrap{position:relative;z-index:2}
   /* pre-hide hero for the GSAP entrance (falls back to CSS rise if GSAP absent) */
-  .pre-gsap .hero-status,.pre-gsap .hero-term,
+  .pre-gsap .hero-status,.pre-gsap header h1,.pre-gsap .hero-term,
   .pre-gsap .lede,.pre-gsap .hero-meta{animation:none!important;opacity:0}
 
   /* custom cursor */
@@ -303,6 +303,14 @@
   .pname{opacity:1!important;animation:none!important;margin:0 0 6px;line-height:1}
   .pname .sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
   #pcanvas{display:block}
+  /* graph hero: text left, interactive works-graph right */
+  .hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:44px;align-items:center}
+  @media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:30px}}
+  .graph-panel{position:relative;height:460px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(180deg,rgba(20,16,14,.5),rgba(12,10,9,.3));overflow:hidden}
+  @media(max-width:900px){.graph-panel{height:380px}}
+  #graph{display:block;width:100%;height:100%;cursor:none}
+  .gp-tag{position:absolute;top:14px;left:16px;font-size:11px;letter-spacing:1px;color:var(--ink-faint);text-transform:uppercase}
+  .gp-hint{position:absolute;bottom:12px;left:0;right:0;text-align:center;font-size:11px;color:var(--ink-faint)}
   .hero-status{color:var(--teal);background:rgba(90,179,164,.08);border:1px solid rgba(90,179,164,.28)}
   .hero-status:hover{background:rgba(90,179,164,.14);border-color:rgba(90,179,164,.5);box-shadow:0 8px 24px -14px rgba(90,179,164,.5)}
   .hero-status .dot{background:var(--teal);box-shadow:0 0 9px var(--teal)}
@@ -427,17 +435,24 @@
 </nav>
 
 <header>
-  <div class="wrap">
-    <a class="hero-status" href="#case-1" title="跳到第一个案例"><i class="dot"></i>5 SERVICES LIVE · GitHub Pages / Vercel / Streamlit<span class="go">→</span></a>
-    <h1 class="pname"><span class="sr">廖思嘉</span><canvas id="pcanvas" aria-hidden="true"></canvas></h1>
-    <div class="hero-term"><span class="pr">~ </span><span class="type">把判断直接变成可运行的原型</span><span class="caret"></span></div>
-    <p class="lede">教育科技方向硕士。用研究方法理解用户，用产品思维判断什么值得做，用 AI 工具自己把想法做成可运行的原型。</p>
-    <div class="hero-meta">
-      <a class="pill solid" href="#work">看核心案例 →</a>
-      <a class="pill" href="resume.pdf" target="_blank">查看简历</a>
-      <span class="pill mono">UTAUT2 · PLS-SEM</span>
+  <div class="wrap"><div class="hero-grid">
+    <div class="hero-text">
+      <a class="hero-status" href="#case-1" title="跳到第一个案例"><i class="dot"></i>5 SERVICES LIVE · GitHub Pages / Vercel / Streamlit<span class="go">→</span></a>
+      <h1>廖思嘉</h1>
+      <div class="hero-term"><span class="pr">~ </span><span class="type">把判断直接变成可运行的原型</span><span class="caret"></span></div>
+      <p class="lede">教育科技方向硕士。用研究方法理解用户，用产品思维判断什么值得做。这五个工具不是清单，是一条谱系——拖一拖，看它们怎么连在一起。</p>
+      <div class="hero-meta">
+        <a class="pill solid" href="#work">看核心案例 →</a>
+        <a class="pill" href="resume.pdf" target="_blank">查看简历</a>
+        <span class="pill mono">UTAUT2 · PLS-SEM</span>
+      </div>
     </div>
-  </div>
+    <div class="graph-panel">
+      <span class="gp-tag mono">作品体 / works graph</span>
+      <canvas id="graph"></canvas>
+      <span class="gp-hint mono">拖动节点 · 悬停查看角色</span>
+    </div>
+  </div></div>
 </header>
 
 <section id="about">
@@ -848,8 +863,9 @@ var REDUCE=false;try{REDUCE=matchMedia('(prefers-reduced-motion: reduce)').match
     var h1=document.querySelector('header h1');
     var tl=gsap.timeline({defaults:{ease:'expo.out'}});
     tl.fromTo('.hero-status',{opacity:0,y:16},{opacity:1,y:0,duration:.7},0);
-    // (the big name is rendered as an interactive particle field — see module 4c)
-    tl.fromTo('.hero-term',{opacity:0,y:16},{opacity:1,y:0,duration:.7},'-=.75');
+    tl.fromTo('header h1',{opacity:0,y:34},{opacity:1,y:0,duration:1,ease:'expo.out'},.12);
+    tl.from('.graph-panel',{opacity:0,duration:1.1,ease:'power2.out'},.2);
+    tl.fromTo('.hero-term',{opacity:0,y:16},{opacity:1,y:0,duration:.7},'-=.85');
     var ty=document.querySelector('.hero-term .type');
     if(ty&&window.ScrambleTextPlugin){var txt=ty.textContent;
       tl.to(ty,{duration:1.5,scrambleText:{text:txt,chars:'01<>/{}#你他用是',speed:.5,revealDelay:.1}},'-=.35');}
@@ -860,55 +876,53 @@ var REDUCE=false;try{REDUCE=matchMedia('(prefers-reduced-motion: reduce)').match
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(run);else run();
 })();
 
-/* 4c. Particle name — "廖思嘉" built from glowing points; assembles in,
-       scatters under the cursor, flows back and reforms */
+/* 4c. Interactive works-graph — 5 tools, spring physics, draggable */
 (function(){
-  var cv=document.getElementById('pcanvas'); if(!cv) return;
-  var ctx=cv.getContext('2d'); var dpr=Math.min(window.devicePixelRatio||1,2);
-  var TEXT='廖思嘉', pts=[], mouse={x:-9999,y:-9999};
-  function fontSize(){return Math.min(96,Math.max(46,Math.round(innerWidth*0.115)));}
-  function build(){
-    var fs=fontSize();
-    var off=document.createElement('canvas'),octx=off.getContext('2d');
-    octx.font='700 '+fs+'px "Noto Serif SC", serif';
-    var w=Math.ceil(octx.measureText(TEXT).width)+12, h=Math.ceil(fs*1.28);
-    cv.style.width=w+'px';cv.style.height=h+'px';cv.width=w*dpr;cv.height=h*dpr;
-    off.width=w*dpr;off.height=h*dpr;
-    octx.scale(dpr,dpr);octx.font='700 '+fs+'px "Noto Serif SC", serif';
-    octx.fillStyle='#fff';octx.textBaseline='middle';octx.fillText(TEXT,6,h/2);
-    var img=octx.getImageData(0,0,off.width,off.height).data;
-    var gap=Math.max(3,Math.round(3.4*dpr)),np=[];
-    for(var y=0;y<off.height;y+=gap)for(var x=0;x<off.width;x+=gap){
-      if(img[(y*off.width+x)*4+3]>130) np.push({hx:x,hy:y,
-        x:pts.length?undefined:Math.random()*cv.width, y:Math.random()*cv.height,vx:0,vy:0});
-    }
-    // keep current positions on resize where possible; init new ones scattered
-    np.forEach(function(p){if(p.x===undefined){p.x=Math.random()*cv.width;}});
-    pts=np;
+  var cv=document.getElementById('graph');if(!cv)return;var ctx=cv.getContext('2d');
+  var dpr=Math.min(window.devicePixelRatio||1,2),W=0,H=0;
+  var nodes=[
+    {id:'split',label:'名单拆分工具',sub:'导入端',type:'work',hx:.20,hy:.30},
+    {id:'merge',label:'成绩汇总工具',sub:'汇总端',type:'work',hx:.20,hy:.72},
+    {id:'hinge',label:'AI 使用者测试',sub:'枢纽 · 研究 × 产品',type:'hinge',hx:.54,hy:.51},
+    {id:'eng',label:'English House',sub:'英语学习',type:'self',hx:.84,hy:.30},
+    {id:'mind',label:'念头分拣器',sub:'情绪 / 认知',type:'self',hx:.84,hy:.72}
+  ];
+  var byId={};nodes.forEach(function(n){byId[n.id]=n;});
+  var edges=[['split','merge',true],['split','hinge',false],['merge','hinge',false],['hinge','eng',false],['hinge','mind',false]];
+  var COL={work:'#d4663c',hinge:'#e8855a',self:'#5ab3a4'},FILL={work:'#241a16',hinge:'#2a1a12',self:'#16201d'};
+  var mouse={x:-9999,y:-9999,down:false},drag=null,hover=null;
+  function size(){var r=cv.getBoundingClientRect();W=cv.width=Math.max(1,r.width*dpr);H=cv.height=Math.max(1,r.height*dpr);
+    nodes.forEach(function(n){n.HX=n.hx*W;n.HY=n.hy*H;if(n.x===undefined){n.x=W/2;n.y=H/2;n.vx=0;n.vy=0;}});}
+  function chip(n){ctx.font='600 '+(14*dpr)+'px "Noto Sans SC",sans-serif';return {w:ctx.measureText(n.label).width+34*dpr,h:34*dpr};}
+  function toCv(e){var r=cv.getBoundingClientRect();return {x:(e.clientX-r.left)*dpr,y:(e.clientY-r.top)*dpr};}
+  function hit(p){for(var i=nodes.length-1;i>=0;i--){var n=nodes[i],c=chip(n);if(Math.abs(p.x-n.x)<c.w/2&&Math.abs(p.y-n.y)<c.h/2+6*dpr)return n;}return null;}
+  cv.addEventListener('mousedown',function(e){var n=hit(toCv(e));if(n){drag=n;mouse.down=true;}});
+  window.addEventListener('mousemove',function(e){var p=toCv(e);mouse.x=p.x;mouse.y=p.y;if(drag){drag.x=p.x;drag.y=p.y;drag.vx=0;drag.vy=0;}else{hover=hit(p);}});
+  window.addEventListener('mouseup',function(){drag=null;mouse.down=false;});
+  cv.addEventListener('mouseleave',function(){mouse.x=mouse.y=-9999;if(!mouse.down)hover=null;});
+  function physics(){
+    for(var i=0;i<nodes.length;i++){var n=nodes[i];if(n===drag)continue;
+      var fx=(n.HX-n.x)*0.020,fy=(n.HY-n.y)*0.020;
+      for(var j=0;j<nodes.length;j++){if(i===j)continue;var m=nodes[j];var dx=n.x-m.x,dy=n.y-m.y,d2=dx*dx+dy*dy,d=Math.sqrt(d2)||1;
+        var rep=Math.min(1.2,(9000*dpr*dpr)/d2);fx+=dx/d*rep;fy+=dy/d*rep;}
+      if(mouse.x>-999){var mdx=n.x-mouse.x,mdy=n.y-mouse.y,md=Math.hypot(mdx,mdy);if(md<90*dpr){var f=(1-md/(90*dpr))*1.4;fx+=mdx/(md||1)*f;fy+=mdy/(md||1)*f;}}
+      n.vx=(n.vx+fx)*0.86;n.vy=(n.vy+fy)*0.86;n.x+=n.vx;n.y+=n.vy;}
+    edges.forEach(function(e){var a=byId[e[0]],b=byId[e[1]],dx=b.x-a.x,dy=b.y-a.y,d=Math.hypot(dx,dy)||1,rest=Math.hypot(b.HX-a.HX,b.HY-a.HY),f=(d-rest)*0.012,ux=dx/d*f,uy=dy/d*f;
+      if(a!==drag){a.vx+=ux;a.vy+=uy;}if(b!==drag){b.vx-=ux;b.vy-=uy;}});
   }
-  function loop(){
-    ctx.clearRect(0,0,cv.width,cv.height);
-    var R=56*dpr;
-    for(var i=0;i<pts.length;i++){var p=pts[i];
-      p.vx+=(p.hx-p.x)*0.02; p.vy+=(p.hy-p.y)*0.02;
-      var dx=p.x-mouse.x,dy=p.y-mouse.y,d=Math.hypot(dx,dy);
-      if(d<R){var f=(1-d/R)*6.0;p.vx+=dx/(d||1)*f;p.vy+=dy/(d||1)*f;}
-      p.vx*=0.85;p.vy*=0.85;p.x+=p.vx;p.y+=p.vy;
-      ctx.fillStyle=(i&7)?'#d4663c':'#e8855a';
-      ctx.fillRect(p.x,p.y,1.7*dpr,1.7*dpr);
-    }
-    requestAnimationFrame(loop);
-  }
-  function pos(e){var r=cv.getBoundingClientRect();mouse.x=(e.clientX-r.left)*dpr;mouse.y=(e.clientY-r.top)*dpr;}
-  function drawStatic(){var fs=fontSize();ctx.font='700 '+fs+'px "Noto Serif SC",serif';
-    var w=Math.ceil(ctx.measureText(TEXT).width)+12,h=Math.ceil(fs*1.28);
-    cv.style.width=w+'px';cv.style.height=h+'px';cv.width=w*dpr;cv.height=h*dpr;ctx.scale(dpr,dpr);
-    ctx.font='700 '+fs+'px "Noto Serif SC",serif';ctx.fillStyle='#ece6df';ctx.textBaseline='middle';ctx.fillText(TEXT,6,h/2);}
-  function go(){build();loop();
-    window.addEventListener('mousemove',pos);
-    cv.addEventListener('mouseleave',function(){mouse.x=mouse.y=-9999;});
-    var rt;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(build,200);});}
-  var start=REDUCE?drawStatic:go;
+  function rr(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+  function draw(now){ctx.clearRect(0,0,W,H);
+    edges.forEach(function(e){var a=byId[e[0]],b=byId[e[1]];ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
+      ctx.strokeStyle=e[2]?'rgba(212,102,60,.55)':'rgba(226,196,170,.18)';ctx.lineWidth=(e[2]?2:1)*dpr;ctx.stroke();
+      if(e[2]){var tt=((now*0.00018)%1),px=a.x+(b.x-a.x)*tt,py=a.y+(b.y-a.y)*tt;ctx.beginPath();ctx.arc(px,py,2.6*dpr,0,6.28);ctx.fillStyle='#e8855a';ctx.fill();}});
+    nodes.forEach(function(n){var c=chip(n),w=c.w,h=c.h,x=n.x-w/2,y=n.y-h/2,on=(n===hover||n===drag);
+      if(on){ctx.shadowColor=COL[n.type];ctx.shadowBlur=18*dpr;}else{ctx.shadowBlur=0;}
+      rr(x,y,w,h,h/2);ctx.fillStyle=FILL[n.type];ctx.fill();ctx.lineWidth=(on?2:1.3)*dpr;ctx.strokeStyle=COL[n.type];ctx.stroke();ctx.shadowBlur=0;
+      ctx.font='600 '+(14*dpr)+'px "Noto Sans SC",sans-serif';ctx.fillStyle='#ece6df';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(n.label,n.x,n.y);
+      if(on){ctx.font='400 '+(11*dpr)+'px "JetBrains Mono",monospace';ctx.fillStyle=COL[n.type];ctx.fillText(n.sub,n.x,n.y+h/2+12*dpr);}});}
+  function loop(now){if(!REDUCE)physics();draw(now);requestAnimationFrame(loop);}
+  function start(){size();nodes.forEach(function(n){n.x=W/2;n.y=H/2;});requestAnimationFrame(loop);
+    var rt;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){nodes.forEach(function(n){n.x=undefined;});size();},200);});}
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(start);else setTimeout(start,300);
 })();
 
