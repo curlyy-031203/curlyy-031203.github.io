@@ -37,17 +37,26 @@
   .icon{width:18px;height:18px;flex:0 0 auto;stroke:currentColor;stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round}
   .icon-sm{width:15px;height:15px}
 
-  /* ---------- intro overlay (curtain) ---------- */
-  #intro{display:none}
-  .js #intro{display:flex;position:fixed;inset:0;z-index:9999;background:var(--bg);flex-direction:column;align-items:center;justify-content:center;gap:22px;will-change:transform;transition:transform .95s cubic-bezier(.76,0,.24,1)}
-  #intro.lift{transform:translateY(-100%)}
-  .intro-name{font-family:var(--serif);font-weight:600;font-size:clamp(34px,6vw,54px);color:var(--ink);letter-spacing:.04em;opacity:0;transform:translateY(12px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
-  .intro-name.show{opacity:1;transform:none}
-  .intro-line{width:0;height:1px;background:var(--accent);transition:width 1.15s var(--ease),opacity .4s var(--ease)}
-  .intro-line.grow{width:min(220px,42vw)}
-  .intro-count{position:absolute;bottom:30px;right:clamp(22px,5vw,40px);font-size:12px;letter-spacing:.14em;color:var(--ink-faint);transition:opacity .4s var(--ease)}
-  html.intro-lock{overflow:hidden}
-  @media(prefers-reduced-motion:reduce){.js #intro{display:none}}
+  /* ---------- entry gate: a curtain you pull open ---------- */
+  #gate{display:none}
+  .js #gate{display:block;position:fixed;inset:0;z-index:9999}
+  .gate-panel{position:absolute;top:0;bottom:0;width:50.5%;background:#eceae3;will-change:transform;transition:transform 1.05s cubic-bezier(.76,0,.24,1)}
+  .gate-l{left:0}
+  .gate-r{right:0}
+  .gate-seam{position:absolute;top:0;bottom:0;left:50%;width:1px;background:var(--line-strong);transform:translateX(-.5px);transition:opacity .5s var(--ease)}
+  #gate.open .gate-l{transform:translateX(-100%)}
+  #gate.open .gate-r{transform:translateX(100%)}
+  #gate.open .gate-seam{opacity:0}
+  .gate-enter{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;background:transparent;border:0;cursor:pointer;color:var(--ink);transition:opacity .45s var(--ease),transform .45s var(--ease)}
+  #gate.open .gate-enter{opacity:0;transform:translateY(-8px);pointer-events:none}
+  .gate-eyebrow{font-size:12.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-faint)}
+  .gate-cta{display:inline-flex;align-items:center;gap:13px;font-family:var(--serif);font-weight:600;font-size:clamp(19px,2.5vw,26px);color:var(--ink);letter-spacing:.02em}
+  .gate-cta .ln{width:28px;height:1px;background:var(--accent);transition:width .45s var(--ease)}
+  .gate-enter:hover .gate-cta .ln{width:56px}
+  .gate-arrow{width:19px;height:19px;stroke:var(--accent);stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round;transition:transform .45s var(--ease)}
+  .gate-enter:hover .gate-arrow{transform:translateX(4px)}
+  html.gate-lock{overflow:hidden}
+  @media(prefers-reduced-motion:reduce){.js #gate{display:none}}
 
   /* ---------- nav ---------- */
   nav{position:sticky;top:0;z-index:50;background:rgba(245,245,242,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
@@ -153,10 +162,14 @@
 <body>
 <script>document.documentElement.classList.add('js')</script>
 
-<div id="intro" aria-hidden="true">
-  <div class="intro-name">廖思嘉</div>
-  <div class="intro-line"></div>
-  <div class="intro-count">000</div>
+<div id="gate">
+  <div class="gate-panel gate-l"></div>
+  <div class="gate-panel gate-r"></div>
+  <div class="gate-seam"></div>
+  <button class="gate-enter" type="button" aria-label="进入作品集">
+    <span class="gate-eyebrow">作品集 · 2026</span>
+    <span class="gate-cta"><span class="ln"></span>进入<svg class="gate-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+  </button>
 </div>
 
 <nav><div class="wrap">
@@ -343,19 +356,17 @@
 <script>
 var REDUCE_M=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-/* intro curtain — plays once, then lifts to reveal the site */
+/* entry gate — click to pull the curtain open, revealing the site */
 (function(){
-  var intro=document.getElementById('intro');if(!intro)return;
-  if(REDUCE_M){intro.remove();return;}
-  document.documentElement.classList.add('intro-lock');
-  var nm=intro.querySelector('.intro-name'),ln=intro.querySelector('.intro-line'),ct=intro.querySelector('.intro-count');
-  requestAnimationFrame(function(){nm.classList.add('show');ln.classList.add('grow');});
-  var n=0,iv=setInterval(function(){n=Math.min(100,n+Math.ceil((100-n)*0.10)+1);ct.textContent=('00'+n).slice(-3);if(n>=100)clearInterval(iv);},26);
-  setTimeout(function(){
-    nm.style.opacity='0';nm.style.transform='translateY(-10px)';ln.style.opacity='0';ct.style.opacity='0';
-    setTimeout(function(){intro.classList.add('lift');document.documentElement.classList.remove('intro-lock');
-      setTimeout(function(){intro.remove();},1000);},440);
-  },1550);
+  var gate=document.getElementById('gate');if(!gate)return;
+  if(REDUCE_M){gate.remove();return;}
+  document.documentElement.classList.add('gate-lock');
+  var opened=false;
+  function open(){if(opened)return;opened=true;gate.classList.add('open');
+    document.documentElement.classList.remove('gate-lock');
+    setTimeout(function(){gate.remove();},1150);}
+  gate.addEventListener('click',open);
+  document.addEventListener('keydown',function(e){if(!opened&&(e.key==='Enter'||e.key===' ')){e.preventDefault();open();}});
 })();
 
 /* interactive works-graph — 5 tools, spring physics, draggable (calm palette) */
