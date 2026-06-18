@@ -4,604 +4,439 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>廖思嘉 · 作品集</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23f7f3ec'/%3E%3Cpath d='M16 6 C 17 12, 20 15, 26 16 C 20 17, 17 20, 16 26 C 15 20, 12 17, 6 16 C 12 15, 15 12, 16 6 Z' fill='%23b8492b'/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta name="description" content="廖思嘉 — 教育科技方向硕士。用研究方法理解用户，用产品思维判断什么值得做，用 AI 工具把想法做成可运行的原型。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23222a26'/%3E%3Ccircle cx='16' cy='16' r='5' fill='none' stroke='%23cdd6cf' stroke-width='1.6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500&family=Noto+Serif+SC:wght@500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#f7f3ec;--paper-2:#efe8dc;--card:#fffdf9;
-    --ink:#211d18;--ink-soft:#6a6155;--ink-faint:#7a6e5b;
-    --accent:#b8492b;--accent-soft:#e9cdc1;--accent-wash:#f5e7e0;
-    --teal:#2f6b63;--line:#ddd3c2;--maxw:980px;
+    --bg:#f5f5f2;          /* soft cool stone white */
+    --surface:#fbfbf9;
+    --ink:#23282a;         /* deep cool charcoal */
+    --ink-soft:#5d645f;
+    --ink-faint:#969b93;
+    --line:#e3e4df;
+    --line-strong:#d3d5cd;
+    --accent:#6f8077;      /* muted eucalyptus, used sparingly */
+    --accent-deep:#56655d;
+    --r:14px;
+    /* fluid spacing scale */
+    --s-1:8px;--s-2:16px;--s-3:24px;--s-4:32px;--s-5:48px;--s-6:64px;--s-7:96px;--s-8:128px;
+    --serif:"Noto Serif SC",Georgia,serif;
+    --sans:"Noto Sans SC",system-ui,-apple-system,"Segoe UI",sans-serif;
+    --maxw:1080px;--read:680px;
+    --ease:cubic-bezier(.22,.61,.36,1);
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{
-    background:var(--paper);color:var(--ink);
-    font-family:"Noto Sans SC",sans-serif;font-weight:300;line-height:1.85;font-size:16px;
-    -webkit-font-smoothing:antialiased;
-    background-image:radial-gradient(circle at 12% 8%,var(--accent-wash) 0,transparent 38%),radial-gradient(circle at 88% 92%,#eef0ea 0,transparent 42%);
-  }
-  /* 纸张颗粒噪点：程序化生成，固定在底层，几乎不可见，只为暖米底增加质感 */
-  body::before{
-    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    opacity:.035;mix-blend-mode:multiply;
-  }
-  nav,header,section,footer{position:relative;z-index:1}
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
-  .mono{font-family:"JetBrains Mono",monospace}
-  .serif{font-family:"Noto Serif SC",serif}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:300;font-size:17px;line-height:1.75;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  a{color:inherit;text-decoration:none}
+  img,svg{display:block}
+  ::selection{background:#dfe5e0}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(22px,5vw,40px)}
+  .icon{width:18px;height:18px;flex:0 0 auto;stroke:currentColor;stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .icon-sm{width:15px;height:15px}
 
-  /* reveal-on-scroll */
-  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
-  .reveal.in{opacity:1;transform:none}
+  /* ---------- entry gate: a curtain you pull open ---------- */
+  #gate{display:none}
+  .js #gate{display:block;position:fixed;inset:0;z-index:9999}
+  .gate-panel{position:absolute;top:0;bottom:0;width:50.5%;background:#eceae3;will-change:transform;transition:transform 1.05s cubic-bezier(.76,0,.24,1)}
+  .gate-l{left:0}
+  .gate-r{right:0}
+  .gate-seam{position:absolute;top:0;bottom:0;left:50%;width:1px;background:var(--line-strong);transform:translateX(-.5px);transition:opacity .5s var(--ease)}
+  #gate.open .gate-l{transform:translateX(-100%)}
+  #gate.open .gate-r{transform:translateX(100%)}
+  #gate.open .gate-seam{opacity:0}
+  .gate-enter{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;background:transparent;border:0;cursor:pointer;color:var(--ink);transition:opacity .45s var(--ease),transform .45s var(--ease)}
+  #gate.open .gate-enter{opacity:0;transform:translateY(-8px);pointer-events:none}
+  .gate-eyebrow{font-size:12.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-faint)}
+  .gate-cta{display:inline-flex;align-items:center;gap:13px;font-family:var(--serif);font-weight:600;font-size:clamp(19px,2.5vw,26px);color:var(--ink);letter-spacing:.02em}
+  .gate-cta .ln{width:28px;height:1px;background:var(--accent);transition:width .45s var(--ease)}
+  .gate-enter:hover .gate-cta .ln{width:56px}
+  .gate-arrow{width:19px;height:19px;stroke:var(--accent);stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round;transition:transform .45s var(--ease)}
+  .gate-enter:hover .gate-arrow{transform:translateX(4px)}
+  html.gate-lock{overflow:hidden}
+  @media(prefers-reduced-motion:reduce){.js #gate{display:none}}
 
-  nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);background:rgba(247,243,236,.82);border-bottom:1px solid var(--line)}
-  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
-  nav .name{font-family:"Fraunces",serif;font-weight:600;font-size:18px;letter-spacing:.3px}
-  nav .links{display:flex;gap:26px;font-size:14px;color:var(--ink-soft)}
-  nav .links a{color:inherit;text-decoration:none;transition:color .2s}
-  nav .links a:hover{color:var(--accent)}
+  /* ---------- nav ---------- */
+  nav{position:sticky;top:0;z-index:50;background:rgba(245,245,242,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .brand{font-family:var(--serif);font-weight:600;font-size:18px;letter-spacing:.01em}
+  .brand .en{font-family:var(--sans);font-weight:300;color:var(--ink-faint);font-size:14px;margin-left:8px}
+  .nav-links{display:flex;align-items:center;gap:clamp(18px,3vw,36px)}
+  .nav-links a{font-size:14.5px;color:var(--ink-soft);transition:color .3s var(--ease)}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-links a.resume{display:inline-flex;align-items:center;gap:7px;color:var(--ink)}
+  @media(max-width:620px){.nav-links a.muted{display:none}}
 
-  header{padding:120px 0 96px;position:relative}
-  .kicker{font-family:"JetBrains Mono",monospace;font-size:12.5px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:26px;opacity:0;animation:rise .7s .05s forwards}
-  h1{font-family:"Noto Serif SC",serif;font-weight:700;font-size:clamp(40px,6.5vw,72px);line-height:1.08;letter-spacing:-1px;margin-bottom:8px;opacity:0;animation:rise .7s .12s forwards}
-  h1 em{font-family:"Fraunces",serif;font-style:italic;font-weight:500;color:var(--accent);font-size:.82em}
-  .lede{font-size:clamp(17px,2.2vw,21px);font-weight:300;color:var(--ink-soft);max-width:640px;margin-top:28px;line-height:1.7;opacity:0;animation:rise .7s .2s forwards}
-  .hero-meta{display:flex;flex-wrap:wrap;gap:14px;margin-top:40px;opacity:0;animation:rise .7s .3s forwards}
-  .pill{font-family:"JetBrains Mono",monospace;font-size:13px;border:1px solid var(--line);background:var(--card);padding:8px 16px;border-radius:100px;color:var(--ink-soft);text-decoration:none;transition:.2s}
-  .pill:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
-  .pill.solid{background:var(--ink);color:var(--paper);border-color:var(--ink)}
-  .pill.solid:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+  /* ---------- reveal (enhances an already-visible default) ---------- */
+  .r{opacity:1;transform:none}
+  .js .r{opacity:0;transform:translateY(16px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+  .js .r.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.js .r{opacity:1!important;transform:none!important;transition:none}}
 
-  /* ===== Hero · 实时终端签名（方案 C）===== */
-  .hero-status{display:inline-flex;align-items:center;gap:9px;font-family:"JetBrains Mono",monospace;font-size:12.5px;letter-spacing:.3px;color:var(--teal);background:#e7f0ee;border:1px solid #c4ddd6;padding:7px 14px;border-radius:100px;margin-bottom:28px;text-decoration:none;cursor:pointer;opacity:0;animation:rise .7s .05s forwards;transition:border-color .2s,background .2s,box-shadow .2s}
-  .hero-status:hover{border-color:var(--teal);background:#dcebe7;box-shadow:0 8px 20px -12px rgba(47,107,99,.55)}
-  .hero-status .dot{width:8px;height:8px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 0 rgba(47,107,99,.5);animation:pulse 2.4s infinite}
-  .hero-status .go{margin-left:3px;color:var(--teal);opacity:.65;transition:transform .2s,opacity .2s}
-  .hero-status:hover .go{transform:translateX(3px);opacity:1}
-  .hero-term{margin-top:24px;font-family:"JetBrains Mono",monospace;font-size:clamp(15px,2vw,19px);line-height:1.5;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:15px 20px;max-width:620px;opacity:0;animation:rise .7s .26s forwards}
-  .hero-term .pr{color:var(--accent)}
-  .hero-term .caret{display:inline-block;width:9px;height:1.05em;background:var(--ink);vertical-align:-2px;margin-left:3px;animation:blink 1.1s steps(1) infinite}
-  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(47,107,99,.45)}70%{box-shadow:0 0 0 7px rgba(47,107,99,0)}100%{box-shadow:0 0 0 0 rgba(47,107,99,0)}}
-  @keyframes blink{50%{opacity:0}}
+  /* ---------- hero ---------- */
+  header{padding:clamp(90px,15vh,150px) 0 clamp(70px,11vh,120px)}
+  .eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:var(--s-4)}
+  .eyebrow .tick{width:22px;height:1px;background:var(--accent)}
+  h1{font-family:var(--serif);font-weight:600;font-size:clamp(40px,6.4vw,72px);line-height:1.1;letter-spacing:-.01em;margin-bottom:var(--s-3)}
+  h1 .en{display:block;font-family:var(--sans);font-weight:300;font-size:clamp(15px,2vw,19px);letter-spacing:.04em;color:var(--ink-faint);margin-top:var(--s-2)}
+  .lead{font-size:clamp(18px,2.2vw,21px);font-weight:300;color:var(--ink-soft);max-width:var(--read);line-height:1.7;margin-bottom:var(--s-5)}
+  .hero-contact{display:flex;flex-wrap:wrap;gap:var(--s-2)}
+  .pill{display:inline-flex;align-items:center;gap:9px;font-size:14px;color:var(--ink-soft);padding:11px 18px;border:1px solid var(--line-strong);border-radius:100px;background:var(--surface);transition:border-color .3s var(--ease),color .3s var(--ease),transform .3s var(--ease)}
+  .pill:hover{border-color:var(--accent);color:var(--ink);transform:translateY(-1px)}
+  .pill.solid{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+  .pill.solid:hover{background:var(--accent-deep);border-color:var(--accent-deep);color:#fff}
 
-  /* ===== 手感 / 俏皮外壳（只作用于外壳，不碰内容）===== */
-  /* 手绘描边小记号：滚动到时像被一笔画出来 */
-  .mark{display:inline-block;vertical-align:middle;width:30px;height:30px;margin-right:2px;flex:0 0 auto}
-  .mark path,.mark line,.mark circle,.mark polyline{
-    fill:none;stroke:var(--accent);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;
-    stroke-dasharray:var(--len,120);stroke-dashoffset:var(--len,120);
-    transition:stroke-dashoffset 1s ease .15s;
-  }
-  .reveal.in .mark path,.reveal.in .mark line,.reveal.in .mark circle,.reveal.in .mark polyline{stroke-dashoffset:0}
-  .sec-label-row{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+  /* ---------- section scaffold ---------- */
+  section{padding:clamp(64px,10vh,110px) 0;border-top:1px solid var(--line)}
+  .sec-head{margin-bottom:var(--s-6)}
+  .label{display:inline-flex;align-items:center;gap:10px;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:var(--s-3)}
+  .label .icon{width:16px;height:16px;color:var(--accent)}
+  h2{font-family:var(--serif);font-weight:600;font-size:clamp(27px,3.6vw,40px);line-height:1.2;letter-spacing:-.005em;max-width:760px}
+  .sec-intro{color:var(--ink-soft);max-width:var(--read);margin-top:var(--s-3);font-size:clamp(16px,1.9vw,18px)}
 
-  /* h2 下面一条手绘下划线，滚动到时画出 */
-  .h2-wrap{position:relative;display:inline-block}
-  .h2-underline{position:absolute;left:0;bottom:-10px;width:100%;height:12px;overflow:visible}
-  .h2-underline path{fill:none;stroke:var(--accent-soft);stroke-width:3.5;stroke-linecap:round;
-    stroke-dasharray:var(--len,300);stroke-dashoffset:var(--len,300);transition:stroke-dashoffset 1.1s ease .25s}
-  .reveal.in .h2-underline path{stroke-dashoffset:0}
+  /* ---------- about: three intersections ---------- */
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,2.4vw,28px)}
+  @media(max-width:780px){.grid3{grid-template-columns:1fr}}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:clamp(26px,3vw,34px);transition:border-color .35s var(--ease),transform .35s var(--ease),box-shadow .35s var(--ease)}
+  .card:hover{border-color:var(--line-strong);transform:translateY(-3px);box-shadow:0 18px 40px -28px rgba(35,40,42,.28)}
+  .card .ci{width:38px;height:38px;border-radius:10px;background:#eef1ee;color:var(--accent-deep);display:flex;align-items:center;justify-content:center;margin-bottom:var(--s-3)}
+  .card h3{font-family:var(--serif);font-weight:600;font-size:20px;margin-bottom:var(--s-2)}
+  .card p{font-size:15px;color:var(--ink-soft);line-height:1.7}
 
-  /* 卡片 hover：极轻微歪一下，像手绘的随性（具体规则在各自定义处） */
-  .pill:hover{transform:translateY(-2px) rotate(-1.5deg)}
+  /* ---------- how I work: quiet feature row ---------- */
+  .lede-quote{font-family:var(--serif);font-weight:500;font-size:clamp(22px,3vw,30px);line-height:1.45;letter-spacing:-.005em;max-width:820px}
+  .principle{margin-top:var(--s-5);display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+  @media(max-width:780px){.principle{grid-template-columns:1fr 1fr}}
+  @media(max-width:480px){.principle{grid-template-columns:1fr}}
+  .principle .cell{background:var(--surface);padding:var(--s-4) var(--s-3)}
+  .principle .k{font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:var(--s-1)}
+  .principle .v{font-size:14.5px;color:var(--ink-soft);line-height:1.6}
 
-  /* 关系图谱小彩蛋：hover 枢纽节点冒出手绘小提示 */
-  .hinge-hit{cursor:help}
-  .egg{opacity:0;transition:opacity .25s,transform .25s;transform:translateY(4px);pointer-events:none}
-  .map-svg:hover .egg{opacity:1;transform:none}
-  .egg text{font-family:"Noto Sans SC",sans-serif;font-size:12px;fill:var(--ink)}
-  .egg path{fill:none;stroke:var(--accent);stroke-width:1.8;stroke-linecap:round}
+  /* ---------- cases ---------- */
+  .case{padding:clamp(34px,4vw,52px) 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:clamp(28px,5vw,72px);align-items:start}
+  .case:last-child{border-bottom:none}
+  @media(max-width:820px){.case{grid-template-columns:1fr;gap:var(--s-5)}}
+  .case .meta .tag{display:inline-block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-deep);background:#eef1ee;padding:5px 12px;border-radius:100px;margin-bottom:var(--s-3)}
+  .case h3{font-family:var(--serif);font-weight:600;font-size:clamp(22px,3vw,30px);line-height:1.25;letter-spacing:-.01em;margin-bottom:var(--s-3)}
+  .case .desc{color:var(--ink-soft);font-size:16px;line-height:1.75;max-width:60ch}
+  .case .links{display:flex;flex-wrap:wrap;gap:var(--s-3);margin-top:var(--s-4)}
+  .case .links a{display:inline-flex;align-items:center;gap:7px;font-size:14px;color:var(--ink);border-bottom:1px solid var(--line-strong);padding-bottom:3px;transition:border-color .3s var(--ease),color .3s var(--ease)}
+  .case .links a:hover{border-color:var(--accent);color:var(--accent-deep)}
+  .stats{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+  .stat{background:var(--surface);padding:var(--s-3) var(--s-4)}
+  .stat .n{font-family:var(--serif);font-weight:600;font-size:28px;letter-spacing:-.01em;color:var(--ink)}
+  .stat .c{font-size:13px;color:var(--ink-faint);margin-top:4px;line-height:1.5}
 
-  section{padding:64px 0;border-top:1px solid var(--line)}
-  .sec-label{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;display:flex;align-items:center;gap:12px}
-  .sec-label::before{content:"";width:26px;height:1px;background:var(--accent)}
-  h2{font-family:"Noto Serif SC",serif;font-weight:700;font-size:clamp(26px,3.6vw,38px);line-height:1.2;letter-spacing:-.5px;margin-bottom:22px;max-width:760px}
-  .sec-intro{color:var(--ink-soft);max-width:680px;font-size:16.5px}
+  /* ---------- works map: calm spectrum ---------- */
+  .spectrum{margin-top:var(--s-5);display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,22px);position:relative}
+  @media(max-width:780px){.spectrum{grid-template-columns:1fr}}
+  .col{display:flex;flex-direction:column;gap:var(--s-2)}
+  .col .ch{font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);padding-bottom:var(--s-2);border-bottom:1px solid var(--line);margin-bottom:var(--s-1)}
+  .tool{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:var(--s-3);transition:border-color .3s var(--ease),transform .3s var(--ease)}
+  .tool:hover{border-color:var(--accent);transform:translateY(-2px)}
+  .tool .t{font-family:var(--serif);font-weight:600;font-size:16px}
+  .tool .s{font-size:13px;color:var(--ink-faint);margin-top:3px}
+  .tool.hinge{border-color:var(--line-strong);background:#f0f2ef}
 
-  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:44px}
-  .icard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px 24px 28px;position:relative;transition:transform .28s cubic-bezier(.34,1.56,.64,1),border-color .25s,box-shadow .25s}
-  .icard:hover{transform:translateY(-5px) rotate(-.8deg);border-color:var(--accent-soft);box-shadow:0 18px 40px -22px rgba(120,60,40,.35)}
-  .icard .no{font-family:"Fraunces",serif;font-size:13px;color:var(--accent);letter-spacing:1px}
-  .icard h3{font-family:"Noto Serif SC",serif;font-size:19px;font-weight:700;margin:14px 0 10px}
-  .icard p{font-size:14.5px;color:var(--ink-soft);line-height:1.75}
+  /* interactive works-graph (calm palette) */
+  .graph-wrap{margin-top:var(--s-5);position:relative;height:clamp(380px,52vw,460px);border:1px solid var(--line);border-radius:var(--r);background:linear-gradient(180deg,var(--surface),#f1f2ee);overflow:hidden}
+  #wgraph{display:block;width:100%;height:100%}
+  .graph-hint{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.04em;color:var(--ink-faint)}
+  .sr-list{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
 
-  .thesis{background:var(--ink);color:var(--paper);border-radius:18px;padding:48px 44px;position:relative;overflow:hidden}
-  .thesis::after{content:"↻";position:absolute;right:-10px;bottom:-40px;font-size:220px;color:rgba(255,255,255,.05);font-family:"Fraunces",serif;animation:spin 30s linear infinite}
-  .thesis .sec-label{color:rgba(255,255,255,.5)}
-  .thesis .sec-label::before{background:var(--accent-soft)}
-  .thesis h2{color:var(--paper);margin-bottom:18px;max-width:680px}
-  .thesis p{color:rgba(247,243,236,.78);max-width:640px;position:relative;z-index:1}
+  /* ---------- side projects ---------- */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(18px,2.4vw,28px)}
+  @media(max-width:780px){.grid2{grid-template-columns:1fr}}
 
-  .case{margin-top:24px;background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden}
-  .case-head{padding:30px 34px 8px}
-  .case-tag{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#a8401f;background:var(--accent-wash);padding:5px 12px;border-radius:6px;margin-bottom:16px}
-  .case h3{font-family:"Noto Serif SC",serif;font-size:clamp(22px,3vw,30px);font-weight:700;line-height:1.25;letter-spacing:-.5px}
-  .case-sub{color:var(--ink-soft);margin-top:12px;max-width:680px;font-size:16px}
-  .case-links{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
-
-  .visual{margin:26px 34px;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:30px 24px}
-  .visual figcaption{text-align:center;font-size:13px;color:var(--ink-faint);margin-top:16px;font-family:"JetBrains Mono",monospace}
-
-  /* 截图框 + 占位符 */
-  .shot{margin:26px 34px 0}
-  .shot-frame{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#fff;box-shadow:0 22px 50px -30px rgba(80,50,30,.45)}
-  .shot-frame img{display:block;width:100%;height:auto}
-  /* 浏览器顶栏装饰，让截图更像“产品”而非随手截屏 */
-  .shot-bar{display:flex;align-items:center;gap:7px;padding:11px 16px;background:var(--paper-2);border-bottom:1px solid var(--line)}
-  .shot-bar i{width:11px;height:11px;border-radius:50%;background:#d8cdb8;display:inline-block}
-  .shot-bar i:nth-child(1){background:#e0a89a}.shot-bar i:nth-child(2){background:#e3cf9e}.shot-bar i:nth-child(3){background:#b6cabf}
-  .shot-bar .url{margin-left:10px;font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--ink-faint);background:var(--card);border:1px solid var(--line);border-radius:6px;padding:3px 12px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  /* 占位空框：替换为真实截图后整段删除即可 */
-  .ph-box{aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:repeating-linear-gradient(45deg,var(--paper) 0 12px,var(--paper-2) 12px 24px);color:var(--ink-soft);text-align:center;padding:24px}
-  .ph-box .pic{font-size:30px;opacity:.5}
-  .ph-box .pt{font-family:"JetBrains Mono",monospace;font-size:13px;color:var(--ink)}
-  .ph-box .pn{font-family:"JetBrains Mono",monospace;font-size:12px;color:#a8401f;background:var(--accent-wash);padding:3px 10px;border-radius:6px}
-  .ph-box .pd{font-size:12.5px;color:var(--ink-faint);max-width:420px;line-height:1.6}
-  .ph-box .warn{font-size:12px;color:var(--accent);font-weight:500;margin-top:2px}
-  .shot-cap{text-align:center;font-size:13px;color:var(--ink-faint);margin-top:14px}
-
-  /* 实时内嵌：点击加载，避免拖慢首屏 */
-  .live{margin:22px 34px 0}
-  .live-card{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 22px 50px -32px rgba(80,50,30,.4)}
-  .live-prompt{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;background:var(--accent-wash);cursor:pointer;transition:background .2s}
-  .live-prompt:hover{background:#f0d8cd}
-  .live-prompt .lp-text{font-size:14.5px;color:var(--ink)}
-  .live-prompt .lp-text b{font-weight:700;color:#a8401f}
-  .live-prompt .lp-text .sub{display:block;font-size:12.5px;color:var(--ink-soft);margin-top:3px;font-weight:300}
-  .live-prompt .lp-btn{flex:0 0 auto;font-family:"JetBrains Mono",monospace;font-size:13px;background:var(--ink);color:var(--paper);border:none;border-radius:100px;padding:9px 18px;cursor:pointer;transition:.2s}
-  .live-prompt:hover .lp-btn{background:var(--accent)}
-  .live-frame-wrap{display:none;position:relative}
-  .live-frame-wrap.on{display:block}
-  .live-bar{display:flex;align-items:center;gap:7px;padding:10px 16px;background:var(--paper-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-  .live-bar i{width:11px;height:11px;border-radius:50%;background:#d8cdb8}
-  .live-bar i:nth-child(1){background:#e0a89a}.live-bar i:nth-child(2){background:#e3cf9e}.live-bar i:nth-child(3){background:#b6cabf}
-  .live-bar .url{margin-left:10px;font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--ink-faint)}
-  .live-frame-wrap iframe{display:block;width:100%;height:560px;border:none;background:#fff}
-  .live-cap{text-align:center;font-size:13px;color:var(--ink-faint);margin-top:14px}
-  @media(max-width:760px){
-    .live{margin-left:18px;margin-right:18px}
-    .live-frame-wrap iframe{height:480px}
-    .live-prompt{flex-direction:column;align-items:flex-start}
-  }
-  .diagram-toggle{margin:14px 34px 0}
-  .diagram-toggle summary{padding:14px 20px;border:1px dashed var(--line);border-radius:10px}
-  svg{display:block;width:100%;height:auto}
-  .node{fill:var(--card);stroke:var(--line);stroke-width:1.5}
-  .node-msg{fill:#fbeee8;stroke:var(--accent-soft)}
-  .node-out{fill:#eaf2f0;stroke:#bcd6d0}
-  .node-tool{fill:var(--ink);stroke:var(--ink)}
-  .ntext{font-family:"Noto Sans SC",sans-serif;font-size:13px;fill:var(--ink);font-weight:400}
-  .ntext-w{fill:#fff;font-weight:500}
-  .nlabel{font-family:"JetBrains Mono",monospace;font-size:11px;fill:var(--ink-faint)}
-  .flowline{stroke:var(--ink-faint);stroke-width:1.5;fill:none;opacity:.55}
-  .flowline-acc{stroke:var(--accent);stroke-width:2;fill:none;opacity:.5}
-  .dot{fill:var(--accent)}
-  .dot-d{fill:var(--teal)}
-
-  .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:26px}
-  .metric{background:var(--card);padding:30px 24px;text-align:center}
-  .metric .big{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(34px,5vw,46px);color:var(--accent);line-height:1}
-  .metric .cap{font-size:13px;color:var(--ink-soft);margin-top:12px;line-height:1.5}
-
-  .points{padding:30px 34px 12px}
-  .point{display:flex;gap:16px;padding:14px 0;border-bottom:1px dashed var(--line)}
-  .point:last-of-type{border-bottom:none}
-  .point .ph{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--accent);min-width:84px;padding-top:4px}
-  .point .pb{font-size:15.5px;color:var(--ink);line-height:1.7}
-  .point .pb b{font-weight:500}
-
-  details{margin:8px 34px 30px;border:1px solid var(--line);border-radius:10px;background:var(--paper);overflow:hidden}
-  details[open]{background:var(--card)}
-  summary{cursor:pointer;padding:16px 22px;font-family:"JetBrains Mono",monospace;font-size:13px;letter-spacing:.5px;color:var(--ink-soft);list-style:none;display:flex;align-items:center;justify-content:space-between;transition:color .2s}
-  summary:hover{color:var(--accent)}
-  summary::-webkit-details-marker{display:none}
-  summary .chev{transition:transform .25s,color .25s;font-size:18px}
-  details[open] summary .chev{transform:rotate(45deg);color:var(--accent)}
-  .dd{padding:4px 24px 24px;color:var(--ink-soft);font-size:15px;line-height:1.85}
-  .dd p{margin-bottom:14px}.dd p:last-child{margin-bottom:0}
-  .dd b{color:var(--ink);font-weight:500}
-
-  .pquote{margin:30px 34px;padding:8px 0 8px 28px;border-left:3px solid var(--accent)}
-  .pquote q{font-family:"Noto Serif SC",serif;font-weight:500;font-size:clamp(21px,3vw,28px);line-height:1.4;quotes:"“" "”";color:var(--ink)}
-  .pquote .src{display:block;font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--ink-faint);margin-top:14px;letter-spacing:1px}
-
-  /* relationship map */
-  .mapwrap{margin-top:40px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:36px 30px 26px}
-  .mapnode{fill:var(--card);stroke:var(--line);stroke-width:1.5;transition:.3s}
-  .mapnode.work{fill:#fbeee8;stroke:var(--accent-soft)}
-  .mapnode.hinge{fill:var(--ink);stroke:var(--ink)}
-  .mapnode.self{fill:#eaf2f0;stroke:#bcd6d0}
-  .mtext{font-family:"Noto Sans SC",sans-serif;font-size:13px;fill:var(--ink);font-weight:500}
-  .mtext-w{fill:#fff}
-  .msub{font-family:"JetBrains Mono",monospace;font-size:10.5px;fill:var(--ink-faint)}
-  .msub-w{fill:rgba(255,255,255,.65)}
-  .axis{stroke:var(--ink-faint);stroke-width:1;opacity:.4}
-  .axislabel{font-family:"JetBrains Mono",monospace;font-size:11px;fill:var(--ink-faint);letter-spacing:1px}
-  .maplegend{display:flex;flex-wrap:wrap;gap:18px;margin-top:22px;justify-content:center;font-size:13px;color:var(--ink-soft)}
-  .maplegend span{display:flex;align-items:center;gap:7px}
-  .dotk{width:11px;height:11px;border-radius:3px;display:inline-block}
-
-  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:36px}
-  .scard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px;transition:transform .28s cubic-bezier(.34,1.56,.64,1),border-color .25s}
-  .scard:hover{border-color:var(--accent-soft);transform:translateY(-4px) rotate(.7deg)}
-  .scard .stag{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:1px;color:var(--ink-faint);text-transform:uppercase}
-  .scard h3{font-family:"Noto Serif SC",serif;font-size:18px;font-weight:700;margin:10px 0 8px}
-  .scard p{font-size:14.5px;color:var(--ink-soft)}
-  .scard .case-links{margin-top:16px}
-  .scard .thumb{aspect-ratio:16/9;border-radius:10px;overflow:hidden;border:1px solid var(--line);margin-bottom:16px;background:repeating-linear-gradient(45deg,var(--paper) 0 10px,var(--paper-2) 10px 20px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;padding:14px}
-  .scard .thumb img{width:100%;height:100%;object-fit:cover}
-  .scard .thumb .pic{font-size:22px;opacity:.5}
-  .scard .thumb .pn{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--accent)}
-  .scard .thumb .pt{font-size:11.5px;color:var(--ink-faint);line-height:1.5}
-
-  footer{border-top:1px solid var(--line);padding:50px 0 70px;color:var(--ink-faint);font-size:14px}
-  footer .wrap{display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between}
-  footer a{color:var(--ink-soft);text-decoration:none}
-  footer a:hover{color:var(--accent)}
-
-  @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-  @keyframes spin{to{transform:rotate(360deg)}}
-  @media(prefers-reduced-motion:reduce){
-    .reveal{opacity:1;transform:none;transition:none}
-    *{animation:none!important}
-    .mark path,.mark line,.mark circle,.mark polyline,.h2-underline path{stroke-dashoffset:0!important;transition:none!important}
-    .icard:hover,.scard:hover,.pill:hover{transform:none}
-  }
-  @media(max-width:760px){
-    .grid3,.grid2,.metrics{grid-template-columns:1fr}
-    .metrics{gap:0}.metric{border-bottom:1px solid var(--line)}
-    nav .links{gap:16px}
-    header{padding:80px 0 60px}
-    .visual,.points,.pquote,details{margin-left:18px;margin-right:18px}
-    .case-head{margin-left:22px;margin-right:22px;padding-left:0;padding-right:0}
-    .thesis{padding:34px 26px}.mapwrap{padding:24px 16px}
-  }
+  /* ---------- footer ---------- */
+  footer{border-top:1px solid var(--line);padding:var(--s-6) 0 var(--s-7)}
+  .foot{display:flex;flex-wrap:wrap;gap:var(--s-4);align-items:center;justify-content:space-between}
+  .foot .links{display:flex;flex-wrap:wrap;gap:var(--s-4)}
+  .foot a{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--ink-soft);transition:color .3s var(--ease)}
+  .foot a:hover{color:var(--ink)}
+  .foot .copy{font-size:13.5px;color:var(--ink-faint)}
 </style>
 </head>
 <body>
+<script>document.documentElement.classList.add('js')</script>
 
-<nav>
-  <div class="wrap">
-    <span class="name">廖思嘉 / Liao Sijia</span>
-    <div class="links"><a href="#about">关于</a><a href="#work">案例</a><a href="#map">作品体</a><a href="resume.pdf" target="_blank">简历</a></div>
+<div id="gate">
+  <div class="gate-panel gate-l"></div>
+  <div class="gate-panel gate-r"></div>
+  <div class="gate-seam"></div>
+  <button class="gate-enter" type="button" aria-label="进入作品集">
+    <span class="gate-eyebrow">作品集 · 2026</span>
+    <span class="gate-cta"><span class="ln"></span>进入<svg class="gate-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+  </button>
+</div>
+
+<nav><div class="wrap">
+  <a href="#top" class="brand">廖思嘉<span class="en">Liao Sijia</span></a>
+  <div class="nav-links">
+    <a href="#about" class="muted">关于</a>
+    <a href="#work" class="muted">案例</a>
+    <a href="#map" class="muted">作品体</a>
+    <a href="resume.pdf" target="_blank" rel="noopener" class="resume">简历
+      <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
   </div>
-</nav>
+</div></nav>
 
-<header>
-  <div class="wrap">
-    <a class="hero-status" href="#case-1" title="跳到第一个案例"><i class="dot"></i>5 SERVICES LIVE · GitHub Pages / Vercel / Streamlit<span class="go">→</span></a>
-    <h1>廖思嘉</h1>
-    <div class="hero-term"><span class="pr">~ </span>把判断直接变成可运行的原型<span class="caret"></span></div>
-    <p class="lede">教育科技方向硕士。用研究方法理解用户，用产品思维判断什么值得做，用 AI 工具自己把想法做成可运行的原型。</p>
-    <div class="hero-meta">
-      <a class="pill solid" href="#work">看核心案例 →</a>
-      <a class="pill" href="resume.pdf" target="_blank">查看简历</a>
-      <span class="pill mono">UTAUT2 · PLS-SEM</span>
-    </div>
-  </div>
-</header>
+<main id="top">
 
-<section id="about">
-  <div class="wrap">
-    <div class="sec-label-row reveal">
-      <svg class="mark" viewBox="0 0 30 30" style="--len:90"><path d="M15 4 C 16 11, 19 14, 26 15 C 19 16, 16 19, 15 26 C 14 19, 11 16, 4 15 C 11 14, 14 11, 15 4 Z"/></svg>
-      <div class="sec-label" style="margin-bottom:0">关于</div>
+  <!-- HERO -->
+  <header><div class="wrap">
+    <div class="eyebrow r"><span class="tick"></span>作品集 · 2026</div>
+    <h1 class="r">把判断，<br>直接变成可运行的原型<span class="en">Liao Sijia — Educational technology, operations with product judgment</span></h1>
+    <p class="lead r">教育科技方向硕士。用研究方法理解用户，用产品思维判断什么值得做，用 AI 工具自己把想法做成可运行的原型。</p>
+    <div class="hero-contact r">
+      <a class="pill solid" href="#work">看核心案例
+        <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="pill" href="mailto:3120252027@bit.edu.cn">
+        <svg class="icon icon-sm" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>邮箱</a>
+      <a class="pill" href="https://github.com/curlyy-031203" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6 0C6.7 2.3 5.6 2.6 5.6 2.6a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>GitHub</a>
     </div>
-    <h2 class="reveal"><span class="h2-wrap">三个交叉点，构成我的差异化<svg class="h2-underline" viewBox="0 0 320 12" preserveAspectRatio="none" style="--len:330"><path d="M3 7 C 70 3, 150 11, 240 5 C 280 3, 300 6, 317 7"/></svg></span></h2>
-    <p class="sec-intro reveal">教育研究让我习惯先理解再下判断；产品训练让我对"什么值得做"有直觉；动手能力让我不必依赖工程团队就能把想法验证出来。</p>
+  </div></header>
+
+  <!-- ABOUT -->
+  <section id="about"><div class="wrap">
+    <div class="sec-head">
+      <div class="label r"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg>关于</div>
+      <h2 class="r">三个交叉点，构成我的差异化</h2>
+      <p class="sec-intro r">教育研究让我习惯先理解再下判断；产品训练让我对“什么值得做”有直觉；动手能力让我不必依赖工程团队就能把想法验证出来。</p>
+    </div>
     <div class="grid3">
-      <div class="icard reveal"><span class="no">01</span><h3>研究方法</h3><p>硕士论文用 UTAUT2 + PLS-SEM 研究大学生 AI 工具采纳，熟练 SPSS / Python / 问卷设计与统计建模。让数据替我说话，不靠拍脑袋。</p></div>
-      <div class="icard reveal"><span class="no">02</span><h3>产品判断</h3><p>能从高频重复事务里识别"值得被工具化"的环节；看得懂为什么 MBTI 能赢、为什么打卡式产品会输。</p></div>
-      <div class="icard reveal"><span class="no">03</span><h3>动手实现</h3><p>实习期间独立开发 5 个可运行的网页工具。不写代码出身，但能用 AI 工具把判断直接变成产品。</p></div>
+      <div class="card r">
+        <div class="ci"><svg class="icon" viewBox="0 0 24 24"><path d="M4 19V5M4 19h16M8 16v-5M12 16V8M16 16v-3M20 16v-7"/></svg></div>
+        <h3>研究方法</h3>
+        <p>硕士论文用 UTAUT2 + PLS-SEM 研究大学生 AI 工具采纳，熟练 SPSS / Python / 问卷设计与统计建模。让数据替我说话，不靠拍脑袋。</p>
+      </div>
+      <div class="card r">
+        <div class="ci"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3 4 7v6c0 4.4 3.4 7.4 8 8 4.6-.6 8-3.6 8-8V7l-8-4Z"/><path d="m9 12 2 2 4-4"/></svg></div>
+        <h3>产品判断</h3>
+        <p>能从高频重复事务里识别“值得被工具化”的环节；看得懂为什么 MBTI 能赢、为什么打卡式产品会输。</p>
+      </div>
+      <div class="card r">
+        <div class="ci"><svg class="icon" viewBox="0 0 24 24"><path d="M14 7h6v6M20 7l-9 9-4-4-5 5"/></svg></div>
+        <h3>动手实现</h3>
+        <p>实习期间独立开发 5 个可运行的网页工具。不写代码出身，但能用 AI 工具把判断直接变成产品。</p>
+      </div>
     </div>
-  </div>
-</section>
+  </div></section>
 
-<section>
-  <div class="wrap">
-    <div class="thesis reveal">
-      <div class="sec-label">工作方式</div>
-      <h2>找到持续消耗的地方，<br>搭一个一次性的结构去除它</h2>
-      <p>无论被消耗的是团队的时间、用户的耐心、还是我自己的意志力——我的本能都一样：识别那个反复烧人的环节，做成可复用、可交接的工具。下面五个作品，是同一个本能在不同资源上的五次实践。</p>
+  <!-- HOW I WORK -->
+  <section><div class="wrap">
+    <div class="label r"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3v18M3 12h18M6.3 6.3l11.4 11.4M17.7 6.3 6.3 17.7"/></svg>工作方式</div>
+    <p class="lede-quote r">找到一处持续消耗的地方，搭一个一次性的结构去除它。无论被消耗的是团队的时间、用户的耐心，还是我自己的意志力。</p>
+    <div class="principle r">
+      <div class="cell"><div class="k">识别</div><div class="v">反复烧人的高频环节</div></div>
+      <div class="cell"><div class="k">搭建</div><div class="v">一次性、可复用的工具</div></div>
+      <div class="cell"><div class="k">交接</div><div class="v">零门槛，继任者可接</div></div>
+      <div class="cell"><div class="k">沉淀</div><div class="v">把经验变成结构</div></div>
     </div>
-  </div>
-</section>
+  </div></section>
 
-<section id="work">
-  <div class="wrap">
-    <div class="sec-label-row reveal">
-      <svg class="mark" viewBox="0 0 30 30" style="--len:110"><path d="M19 6 a5 5 0 1 0 4 8 l4 4 a2 2 0 0 1 0 3 a2 2 0 0 1-3 0 l-4-4 a5 5 0 0 1-8-4 l3 3 3-3-3-3 z"/></svg>
-      <div class="sec-label" style="margin-bottom:0">核心案例</div>
+  <!-- WORK / CASES -->
+  <section id="work"><div class="wrap">
+    <div class="sec-head">
+      <div class="label r"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v5"/></svg>核心案例</div>
+      <h2 class="r">三个案例，一套可迁移的方法</h2>
     </div>
-    <h2 class="reveal"><span class="h2-wrap">三个案例，一套可迁移的方法<svg class="h2-underline" viewBox="0 0 300 12" preserveAspectRatio="none" style="--len:310"><path d="M3 6 C 60 10, 140 2, 220 8 C 260 11, 285 5, 297 6"/></svg></span></h2>
 
-    <!-- CASE 01 -->
-    <div class="case reveal" id="case-1" style="scroll-margin-top:80px">
-      <div class="case-head">
-        <span class="case-tag">案例 01 · 运营提效</span>
+    <article class="case r">
+      <div class="meta">
+        <span class="tag">案例 01 · 运营提效</span>
         <h3>入学测名单自动拆分工具</h3>
-        <p class="case-sub">把多来源、格式不统一的学生报名数据，自动转换为入学测系统可直接导入的格式。</p>
-        <div class="case-links"><a class="pill solid" href="https://curlyy-031203.github.io/split-tool/">Demo →</a><span class="pill mono">GitHub Pages · 纯前端</span></div>
-      </div>
-
-      <figure class="visual">
-        <svg viewBox="0 0 700 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="两份源表经工具拆分为五张表">
-          <rect class="node node-msg" x="20" y="36" width="150" height="46" rx="9"/><text class="ntext" x="95" y="58" text-anchor="middle">家长问卷名单</text><text class="nlabel" x="95" y="74" text-anchor="middle">来源 A</text>
-          <rect class="node node-msg" x="20" y="148" width="150" height="46" rx="9"/><text class="ntext" x="95" y="170" text-anchor="middle">飞书预约名单</text><text class="nlabel" x="95" y="186" text-anchor="middle">来源 B · 格式不一</text>
-          <path id="c1a" class="flowline-acc" d="M170 59 C 230 59, 250 105, 300 115"/>
-          <path id="c1b" class="flowline-acc" d="M170 171 C 230 171, 250 125, 300 115"/>
-          <rect class="node node-tool" x="300" y="90" width="100" height="50" rx="10"/><text class="ntext ntext-w" x="350" y="112" text-anchor="middle">拆分工具</text><text class="ntext ntext-w" x="350" y="129" text-anchor="middle" font-size="11" opacity=".7">按 5 种班型</text>
-          <path id="c1o1" class="flowline" d="M400 115 C 450 115, 470 36, 530 36"/>
-          <path id="c1o2" class="flowline" d="M400 115 C 450 115, 470 75, 530 75"/>
-          <path id="c1o3" class="flowline" d="M400 115 C 460 115, 480 114, 530 114"/>
-          <path id="c1o4" class="flowline" d="M400 115 C 450 115, 470 153, 530 153"/>
-          <path id="c1o5" class="flowline" d="M400 115 C 450 115, 470 192, 530 192"/>
-          <rect class="node node-out" x="530" y="20" width="150" height="32" rx="7"/><text class="ntext" x="605" y="40" text-anchor="middle">A1 班型表</text>
-          <rect class="node node-out" x="530" y="59" width="150" height="32" rx="7"/><text class="ntext" x="605" y="79" text-anchor="middle">A1′ 班型表</text>
-          <rect class="node node-out" x="530" y="98" width="150" height="32" rx="7"/><text class="ntext" x="605" y="118" text-anchor="middle">A2 班型表</text>
-          <rect class="node node-out" x="530" y="137" width="150" height="32" rx="7"/><text class="ntext" x="605" y="157" text-anchor="middle">A3 班型表</text>
-          <rect class="node node-out" x="530" y="176" width="150" height="32" rx="7"/><text class="ntext" x="605" y="196" text-anchor="middle">A4 班型表</text>
-          <circle class="dot" r="4"><animateMotion dur="1.6s" begin="0s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#c1a"/></animateMotion></circle>
-          <circle class="dot" r="4"><animateMotion dur="1.6s" begin=".8s" repeatCount="indefinite"><mpath href="#c1b"/></animateMotion></circle>
-          <circle class="dot" r="3.5"><animateMotion dur="1.6s" begin="1.6s" repeatCount="indefinite"><mpath href="#c1o1"/></animateMotion></circle>
-          <circle class="dot" r="3.5"><animateMotion dur="1.6s" begin="1.75s" repeatCount="indefinite"><mpath href="#c1o3"/></animateMotion></circle>
-          <circle class="dot" r="3.5"><animateMotion dur="1.6s" begin="1.9s" repeatCount="indefinite"><mpath href="#c1o5"/></animateMotion></circle>
-        </svg>
-        <figcaption>两份乱表 → 工具 → 5 张可直接导入的分班表</figcaption>
-      </figure>
-      <div class="metrics">
-        <div class="metric"><div class="big" data-count="10" data-prefix="~" data-suffix="×">~10×</div><div class="cap">单次提效<br>30–40 分钟 → 3 分钟</div></div>
-        <div class="metric"><div class="big">1.5–2h</div><div class="cap">每周节省的<br>重复劳动</div></div>
-        <div class="metric"><div class="big" data-count="0">0</div><div class="cap">上线后<br>名单错误</div></div>
-      </div>
-      <div class="points">
-        <div class="point"><div class="ph">问题</div><div class="pb">每周 3 次入学测、每次 100–150 人，数据分散在<b>问卷</b>与<b>飞书名单</b>两个来源，且都不匹配系统按 5 种班型要求的导入模板——手动合并、分拣、套模板，耗时易错。</div></div>
-        <div class="point"><div class="ph">关键决策</div><div class="pb">做成<b>网页工具</b>而非脚本或 Excel 公式——目标是让不会写代码的同事和继任实习生也能"上传即用"，零门槛。</div></div>
-        <div class="point"><div class="ph">结果</div><div class="pb">上传两份源表 → 自动输出 5 张分班表。人工 30–40 分钟降到约 3 分钟，上线后零差错。</div></div>
-      </div>
-      <details><summary><span>展开完整决策与踩坑过程</span><span class="chev">+</span></summary>
-        <div class="dd">
-          <p><b>为什么是网页工具，而不是脚本 / Excel 公式？</b>这是一个产品决策而非技术决策：脚本需要环境、Excel 公式难交接，而岗位的本质痛点是"只有我会做"。网页工具部署一次，任何人在浏览器里上传文件就能用，把工具的寿命从"我在职期间"延长到"交接之后"。</p>
-          <p><b>真实踩坑：</b>上线后发现飞书云文档导出的 Excel 与问卷平台导出的格式不一致（时间字段表达方式不同），导致飞书数据无法被正确解析。我定位到差异后修复了解析逻辑，使工具能兼容多种数据源格式——这一步让它从"只在我的数据上能跑"变成"在真实多源数据上能跑"。</p>
+        <p class="desc">每周 3 次入学测、每次 100–150 人，数据分散在问卷与飞书两个来源，且都不匹配系统按 5 种班型要求的模板。做成网页工具而非脚本——目标是让不会写代码的同事和继任者也能“上传即用”，零门槛。</p>
+        <div class="links">
+          <a href="https://curlyy-031203.github.io/split-tool/" target="_blank" rel="noopener">查看 Demo<svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
         </div>
-      </details>
-    </div>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="n">~10×</div><div class="c">单次提效 · 30–40 分钟 → 3 分钟</div></div>
+        <div class="stat"><div class="n">1.5–2h</div><div class="c">每周节省的重复劳动</div></div>
+        <div class="stat"><div class="n">0</div><div class="c">上线后名单错误</div></div>
+      </div>
+    </article>
 
-    <!-- CASE 02 -->
-    <div class="case reveal">
-      <div class="case-head">
-        <span class="case-tag">案例 02 · 数据自动化</span>
+    <article class="case r">
+      <div class="meta">
+        <span class="tag">案例 02 · 数据自动化</span>
         <h3>入学测成绩自动汇总工具</h3>
-        <p class="case-sub">把多个班型的分散成绩增量合并为统一汇总表——与拆分工具构成"数据导入 → 成绩汇总"的完整闭环。</p>
-        <div class="case-links"><a class="pill solid" href="https://scarlett-scores.streamlit.app">Demo →</a><span class="pill mono">Streamlit · Python</span></div>
-      </div>
-
-      <figure class="visual">
-        <svg viewBox="0 0 700 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="五张成绩表加原汇总表增量合并为新汇总表">
-          <rect class="node node-msg" x="20" y="14" width="150" height="30" rx="7"/><text class="ntext" x="95" y="34" text-anchor="middle">A1 成绩表</text>
-          <rect class="node node-msg" x="20" y="50" width="150" height="30" rx="7"/><text class="ntext" x="95" y="70" text-anchor="middle">A1′ 成绩表</text>
-          <rect class="node node-msg" x="20" y="86" width="150" height="30" rx="7"/><text class="ntext" x="95" y="106" text-anchor="middle">A2 成绩表</text>
-          <rect class="node node-msg" x="20" y="122" width="150" height="30" rx="7"/><text class="ntext" x="95" y="142" text-anchor="middle">A3 / A4 成绩表</text>
-          <rect class="node node-out" x="20" y="170" width="150" height="38" rx="7"/><text class="ntext" x="95" y="186" text-anchor="middle">原飞书汇总表</text><text class="nlabel" x="95" y="201" text-anchor="middle">历史数据，不可丢</text>
-          <path id="c2a" class="flowline-acc" d="M170 29 C 240 29, 250 100, 305 110"/>
-          <path id="c2b" class="flowline-acc" d="M170 65 C 240 65, 250 105, 305 112"/>
-          <path id="c2c" class="flowline-acc" d="M170 101 C 240 101, 250 110, 305 114"/>
-          <path id="c2d" class="flowline-acc" d="M170 137 C 240 137, 250 115, 305 116"/>
-          <path id="c2h" class="flowline" d="M170 189 C 250 189, 260 130, 305 120" stroke-dasharray="4 4"/>
-          <rect class="node node-tool" x="305" y="86" width="110" height="56" rx="10"/><text class="ntext ntext-w" x="360" y="108" text-anchor="middle">增量合并</text><text class="ntext ntext-w" x="360" y="126" text-anchor="middle" font-size="11" opacity=".75">只追加 · 不覆盖</text>
-          <path id="c2o" class="flowline-acc" d="M415 114 C 470 114, 490 114, 540 114"/>
-          <rect class="node node-out" x="540" y="86" width="150" height="56" rx="10"/><text class="ntext" x="615" y="110" text-anchor="middle">新总成绩表</text><text class="nlabel" x="615" y="127" text-anchor="middle">复制回飞书即可</text>
-          <circle class="dot" r="4"><animateMotion dur="1.5s" begin="0s" repeatCount="indefinite"><mpath href="#c2a"/></animateMotion></circle>
-          <circle class="dot" r="4"><animateMotion dur="1.5s" begin=".3s" repeatCount="indefinite"><mpath href="#c2c"/></animateMotion></circle>
-          <circle class="dot-d" r="3.5"><animateMotion dur="1.5s" begin=".15s" repeatCount="indefinite"><mpath href="#c2h"/></animateMotion></circle>
-          <circle class="dot" r="4.5"><animateMotion dur="1.4s" begin="1.5s" repeatCount="indefinite"><mpath href="#c2o"/></animateMotion></circle>
-        </svg>
-        <figcaption>5 张成绩表 + 原汇总表 → 只追加新增、绝不覆盖历史 → 一张新汇总表</figcaption>
-      </figure>
-      <div class="metrics">
-        <div class="metric"><div class="big">3–4h</div><div class="cap">两工具合计<br>每周节省</div></div>
-        <div class="metric"><div class="big" data-count="450" data-suffix="+">450+</div><div class="cap">累计已汇总的<br>学生成绩</div></div>
-        <div class="metric"><div class="big" data-count="15">15</div><div class="cap">累计已完成的<br>入学测场次</div></div>
-      </div>
-      <div class="points">
-        <div class="point"><div class="ph">问题</div><div class="pb">成绩管理与名单导入正好相反：5 种班型成绩分别导出成 5 张表，需<b>持续增量汇总</b>进一份飞书总表——手动逐份录入，极易重复、覆盖、出错。</div></div>
-        <div class="point"><div class="ph">关键决策</div><div class="pb">做<b>增量合并</b>而非全量覆盖：全量覆盖有抹掉历史数据的风险，增量逻辑更安全、也更贴合真实使用场景。</div></div>
-        <div class="point"><div class="ph">结果</div><div class="pb">单次汇总从 30–40 分钟降到约 3 分钟。两个工具共同覆盖了入学测项目里最重的两个数据环节。</div></div>
-      </div>
-      <details><summary><span>展开实现细节与隐私设计</span><span class="chev">+</span></summary>
-        <div class="dd">
-          <p>用 <b>Streamlit + Python</b> 部署为浏览器内可用的小工具，零安装、零配置，便于交接给不写代码的同事。</p>
-          <p>规则参数（成绩档位、班型阈值、重合剔除逻辑）放在<b>配置文件</b>里，业务调整不需要改代码；服务端<b>不写数据库、不落日志，处理完即丢</b>，最大程度保护学生信息——这是我主动加的约束，因为工具是给真实学生数据用的。</p>
+        <p class="desc">5 种班型成绩分别导出，需持续增量汇总进一份飞书总表。关键决策是做增量合并而非全量覆盖——全量覆盖有抹掉历史的风险，增量更安全、也更贴合真实使用。与拆分工具构成“导入 → 汇总”的闭环。</p>
+        <div class="links">
+          <a href="https://scarlett-scores.streamlit.app" target="_blank" rel="noopener">查看 Demo<svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
         </div>
-      </details>
-    </div>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="n">3–4h</div><div class="c">两工具合计每周节省</div></div>
+        <div class="stat"><div class="n">450+</div><div class="c">累计已汇总的学生成绩</div></div>
+        <div class="stat"><div class="n">15</div><div class="c">累计已完成的入学测场次</div></div>
+      </div>
+    </article>
 
-    <!-- CASE 03 -->
-    <div class="case reveal">
-      <div class="case-head">
-        <span class="case-tag">案例 03 · 研究 × 产品</span>
+    <article class="case r">
+      <div class="meta">
+        <span class="tag">案例 03 · 研究 × 产品</span>
         <h3>AI 使用者类型测试</h3>
-        <p class="case-sub">把严肃的学术研究量表，重新设计成用户愿意主动参与的趣味测评——基于硕士论文使用的 UTAUT2 框架，测出"你是哪种 AI 使用者"。</p>
-        <div class="case-links"><a class="pill solid" href="https://curlyy-031203.github.io/ai-habit-assessment/">Demo →</a><a class="pill" href="https://github.com/curlyy-031203/ai-habit-assessment">GitHub →</a></div>
-      </div>
-      <div class="pquote"><q>MBTI 把"被调查"变成了"被给予一份关于自己的画像"。</q><span class="src">— 这个洞察，是整个产品决策的起点</span></div>
-
-      <!-- ▼▼▼ 实时内嵌：HR 可在页面内直接做测评（Vercel 托管，允许 iframe）▼▼▼ -->
-      <div class="live">
-        <div class="live-card">
-          <div class="live-prompt" onclick="loadAssessment(this)">
-            <span class="lp-text"><b>不用相信我，你自己试一下。</b><span class="sub">在下方直接做完这套 AI 学习习惯测评，看看它给你的画像——这正是「把被调查变成被给予」的亲身体验。</span></span>
-            <button class="lp-btn" type="button">▶ 在这里开始</button>
-          </div>
-          <div class="live-frame-wrap">
-            <div class="live-bar"><i></i><i></i><i></i><span class="url">ai-habit-assessment.vercel.app</span></div>
-            <iframe data-src="https://ai-habit-assessment.vercel.app/" title="大学生 AI 学习习惯测评" loading="lazy"></iframe>
-          </div>
+        <p class="desc">把严肃的学术量表，重新设计成用户愿意主动参与的趣味测评。洞察来自一句话：MBTI 把“被调查”变成了“被给予一份关于自己的画像”。保留 UTAUT2 的测量维度，却在交付端给用户即时反馈——从单向索取变为双向交换。</p>
+        <div class="links">
+          <a href="https://curlyy-031203.github.io/ai-habit-assessment/" target="_blank" rel="noopener">查看 Demo<svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+          <a href="https://github.com/curlyy-031203/ai-habit-assessment" target="_blank" rel="noopener">GitHub<svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
         </div>
-        <div class="live-cap">真实工具，实时运行 · 也可点上方 Demo 在新标签页打开</div>
       </div>
-
-      <div class="points">
-        <div class="point"><div class="ph">决策</div><div class="pb">我把数据采集的方向<b>掉转过来</b>：保留 UTAUT2 的测量维度，但在交付端给用户一份即时反馈——用百分比综合呈现"你是什么类型的 AI 使用者"。</div></div>
-        <div class="point"><div class="ph">交换</div><div class="pb">用户获得关于自己的洞察（参与动机），我获得符合研究框架的数据（研究价值）——从<b>单向索取</b>变为<b>双向交换</b>。</div></div>
-        <div class="point"><div class="ph">为何重要</div><div class="pb">它正落在我能力的交叉点上：懂量表如何构建、看得懂 MBTI 为何能赢、还能动手把它实现。这是"研究 × 产品"不只是嘴上说说的证据。</div></div>
+      <div class="stats">
+        <div class="stat"><div class="n">UTAUT2</div><div class="c">技术接受框架 · 测量维度</div></div>
+        <div class="stat"><div class="n">研究 × 产品</div><div class="c">能力交叉点的证据</div></div>
       </div>
+    </article>
+  </div></section>
+
+  <!-- WORKS MAP -->
+  <section id="map"><div class="wrap">
+    <div class="sec-head">
+      <div class="label r"><svg class="icon" viewBox="0 0 24 24"><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><path d="M7 6.6 10.6 16M17 6.6 13.4 16M7 6h10"/></svg>作品体</div>
+      <h2 class="r">五个工具，不是清单，是一条谱系</h2>
+      <p class="sec-intro r">它们由同一个本能驱动：发现一处“人在持续消耗某种有限资源”的点，搭一次性的结构把消耗去除。变化的只是被节省的资源，和被服务的对象。</p>
     </div>
-  </div>
-</section>
-
-<!-- RELATIONSHIP MAP -->
-<section id="map">
-  <div class="wrap">
-    <div class="sec-label-row reveal">
-      <svg class="mark" viewBox="0 0 30 30" style="--len:130"><polyline points="6,9 15,15 24,7"/><polyline points="6,9 11,23 22,21 24,7"/><circle cx="6" cy="9" r="2.2"/><circle cx="24" cy="7" r="2.2"/><circle cx="15" cy="15" r="2.2"/><circle cx="11" cy="23" r="2.2"/><circle cx="22" cy="21" r="2.2"/></svg>
-      <div class="sec-label" style="margin-bottom:0">作品体</div>
+    <div class="graph-wrap r">
+      <ul class="sr-list">
+        <li>名单拆分工具 — 导入端，服务团队、节省时间</li>
+        <li>成绩汇总工具 — 汇总端，与拆分工具构成闭环</li>
+        <li>AI 使用者测试 — 枢纽，连接工作与自我，研究 × 产品</li>
+        <li>English House — 英语学习，服务自己、节省意志力</li>
+        <li>念头分拣器 — 情绪 / 认知</li>
+      </ul>
+      <canvas id="wgraph" aria-hidden="true"></canvas>
+      <span class="graph-hint">拖动节点 · 悬停查看角色</span>
     </div>
-    <h2 class="reveal"><span class="h2-wrap">五个工具，不是清单，是一条谱系<svg class="h2-underline" viewBox="0 0 340 12" preserveAspectRatio="none" style="--len:350"><path d="M3 7 C 80 4, 160 10, 250 5 C 290 3, 320 7, 337 6"/></svg></span></h2>
-    <p class="sec-intro reveal">它们由同一个本能驱动：<b>发现一个"人在持续消耗某种有限资源"的点，搭一次性的结构把消耗去除</b>。变化的只是被节省的资源，和被服务的对象。</p>
-    <div class="mapwrap reveal">
-      <svg class="map-svg" viewBox="0 0 700 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="五个工具按服务对象与节省资源排成谱系">
-        <defs>
-          <filter id="rough"><feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="7" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="1.8"/></filter>
-          <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><polygon points="0,0 6,3 0,6" fill="var(--accent)"/></marker>
-        </defs>
-        <g filter="url(#rough)">
-        <path d="M120 40 C 250 14, 450 14, 600 40" fill="none" stroke="var(--accent-soft)" stroke-width="1.5" opacity=".7"/>
-        <!-- WORK cluster shapes -->
-        <rect class="mapnode work hinge-hit" x="40" y="90" width="150" height="48" rx="10"/>
-        <rect class="mapnode work" x="40" y="158" width="150" height="48" rx="10"/>
-        <!-- HINGE shape -->
-        <rect class="mapnode hinge hinge-hit" x="275" y="124" width="150" height="56" rx="12"/>
-        <!-- SELF cluster shapes -->
-        <rect class="mapnode self" x="510" y="90" width="150" height="48" rx="10"/>
-        <rect class="mapnode self" x="510" y="158" width="150" height="48" rx="10"/>
-        </g>
+  </div></section>
 
-        <!-- 连接线与功能性箭头：不进手绘抖动滤镜，保持平滑/笔直 -->
-        <path d="M190 150 C 230 150, 245 152, 275 152" stroke="var(--ink-faint)" stroke-width="1.3" fill="none" opacity=".5"/>
-        <path d="M425 152 C 460 152, 475 150, 510 132" stroke="var(--ink-faint)" stroke-width="1.3" fill="none" opacity=".5"/>
-        <path d="M425 156 C 460 165, 475 175, 510 178" stroke="var(--ink-faint)" stroke-width="1.3" fill="none" opacity=".5"/>
-        <path id="pipe" d="M115 138 L 115 158" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#arr)"/>
-        <line class="axis" x1="40" y1="250" x2="660" y2="250"/>
-        <polygon points="660,250 652,246 652,254" fill="var(--ink-faint)" opacity=".4"/>
-
-        <!-- TEXT layer (crisp, not roughened) -->
-        <g dominant-baseline="central">
-        <text x="350" y="52" text-anchor="middle" class="msub" style="font-size:12px;fill:var(--accent)">同一个本能 · 发现持续消耗 → 搭一次性结构去除它</text>
-        <text class="mtext" x="115" y="108" text-anchor="middle">名单拆分工具</text><text class="msub" x="115" y="125" text-anchor="middle">导入端</text>
-        <text class="mtext" x="115" y="176" text-anchor="middle">成绩汇总工具</text><text class="msub" x="115" y="193" text-anchor="middle">汇总端</text>
-        <text class="msub" x="128" y="148" style="fill:var(--accent)">闭环</text>
-        <text class="mtext mtext-w" x="350" y="146" text-anchor="middle">AI 使用者测试</text><text class="msub msub-w" x="350" y="164" text-anchor="middle">枢纽 · 研究×产品</text>
-        <text class="mtext" x="585" y="108" text-anchor="middle">English House</text><text class="msub" x="585" y="125" text-anchor="middle">英语学习</text>
-        <text class="mtext" x="585" y="176" text-anchor="middle">念头分拣器</text><text class="msub" x="585" y="193" text-anchor="middle">情绪/认知</text>
-        <text class="axislabel" x="40" y="272">服务团队</text>
-        <text class="axislabel" x="350" y="272" text-anchor="middle">服务用户 + 研究</text>
-        <text class="axislabel" x="660" y="272" text-anchor="end">服务自己</text>
-        <text class="msub" x="115" y="300" text-anchor="middle">节省：时间 · 注意力</text>
-        <text class="msub" x="350" y="300" text-anchor="middle">节省：用户的耐心 / 动机</text>
-        <text class="msub" x="585" y="300" text-anchor="middle">节省：意志力 · 情绪</text>
-        </g>
-
-        <!-- 小彩蛋：hover 图谱时，枢纽旁冒出一句手绘批注 -->
-        <g class="egg">
-          <text x="350" y="214" text-anchor="middle">↑ 把学术研究和产品打通的那一个</text>
-        </g>
-
-        <!-- flowing dot on pipeline -->
-        <circle class="dot" r="3.5"><animateMotion dur="1.2s" repeatCount="indefinite"><mpath href="#pipe"/></animateMotion></circle>
-      </svg>
-      <div class="maplegend">
-        <span><i class="dotk" style="background:#fbeee8;border:1px solid var(--accent-soft)"></i>工作工具（成对·首尾相接）</span>
-        <span><i class="dotk" style="background:var(--ink)"></i>枢纽（连接工作与自我）</span>
-        <span><i class="dotk" style="background:#eaf2f0;border:1px solid #bcd6d0"></i>个人项目</span>
-      </div>
+  <!-- SIDE PROJECTS -->
+  <section><div class="wrap">
+    <div class="sec-head">
+      <div class="label r"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5L12 3Z"/></svg>其他作品</div>
+      <h2 class="r">把同一个本能，用在自己身上</h2>
     </div>
-  </div>
-</section>
-
-<!-- SIDE PROJECTS -->
-<section>
-  <div class="wrap">
-    <div class="sec-label-row reveal">
-      <svg class="mark" viewBox="0 0 30 30" style="--len:80"><circle cx="15" cy="9" r="4"/><path d="M7 25 C 7 17, 23 17, 23 25"/></svg>
-      <div class="sec-label" style="margin-bottom:0">其他作品</div>
-    </div>
-    <h2 class="reveal"><span class="h2-wrap">把同一个本能，用在自己身上<svg class="h2-underline" viewBox="0 0 280 12" preserveAspectRatio="none" style="--len:290"><path d="M3 6 C 60 9, 130 3, 200 7 C 240 9, 265 5, 277 6"/></svg></span></h2>
     <div class="grid2">
-      <div class="scard reveal"><span class="stag">个人项目 · 节省意志力</span><h3>英语学习工具 · English House</h3><p>针对我自己英语学习痛点设计的工具，核心理念是用兴趣替代意志力。</p><div class="case-links"><a class="pill" href="https://curlyy-031203.github.io/English-house/">Demo →</a><a class="pill" href="https://github.com/curlyy-031203/English-house">GitHub →</a></div></div>
-      <div class="scard reveal"><span class="stag">个人项目 · 节省情绪能量</span><h3>念头分拣器 · Signal-Noise Tracker</h3><p>一个帮助区分"灾难化想象"与"真实困境"的自用思维工具。</p><div class="case-links"><a class="pill" href="https://curlyy-031203.github.io/cc/">Demo →</a><a class="pill" href="https://github.com/curlyy-031203/cc">GitHub →</a></div></div>
+      <div class="card r">
+        <h3>English House · 英语学习工具</h3>
+        <p>针对我自己英语学习痛点设计，核心理念是用兴趣替代意志力——刻意不做背单词打卡，因为打卡是负担而非动力。</p>
+        <div class="links" style="margin-top:24px;display:flex;gap:24px">
+          <a href="https://curlyy-031203.github.io/English-house/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:7px;font-size:14px;color:var(--accent-deep)">Demo<svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+          <a href="https://github.com/curlyy-031203/English-house" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:7px;font-size:14px;color:var(--ink-soft)">GitHub<svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+        </div>
+      </div>
+      <div class="card r">
+        <h3>念头分拣器 · Signal-Noise Tracker</h3>
+        <p>一个帮助区分“灾难化想象”与“真实困境”的自用思维工具，把模糊的不安拆解成可处理的具体问题。</p>
+        <div class="links" style="margin-top:24px;display:flex;gap:24px">
+          <a href="https://curlyy-031203.github.io/cc/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:7px;font-size:14px;color:var(--accent-deep)">Demo<svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+          <a href="https://github.com/curlyy-031203/cc" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:7px;font-size:14px;color:var(--ink-soft)">GitHub<svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div></section>
+
+</main>
+
+<footer><div class="wrap">
+  <div class="foot">
+    <span class="copy">© 2026 廖思嘉 · Liao Sijia</span>
+    <div class="links">
+      <a href="mailto:3120252027@bit.edu.cn"><svg class="icon icon-sm" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>3120252027@bit.edu.cn</a>
+      <a href="https://github.com/curlyy-031203" target="_blank" rel="noopener"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6 0C6.7 2.3 5.6 2.6 5.6 2.6a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>github.com/curlyy-031203</a>
+      <a href="resume.pdf" target="_blank" rel="noopener">简历<svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
     </div>
   </div>
-</section>
-
-<footer>
-  <div class="wrap"><span>© 2026 廖思嘉</span><span><a href="https://github.com/curlyy-031203">github.com/curlyy-031203</a> · <a href="resume.pdf" target="_blank">简历 →</a></span></div>
-</footer>
+</div></footer>
 
 <script>
-  // scroll reveal with stagger
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach((e,i)=>{
-      if(e.isIntersecting){
-        const els = e.target.parentElement ? [...e.target.parentElement.querySelectorAll('.reveal')] : [];
-        e.target.style.transitionDelay = (Math.min(els.indexOf(e.target),0)*0)+'ms';
-        e.target.classList.add('in');
-        // count-up
-        e.target.querySelectorAll && e.target.querySelectorAll('[data-count]').forEach(runCount);
-        if(e.target.matches('[data-count]')) runCount(e.target);
-        io.unobserve(e.target);
-      }
-    });
-  },{threshold:.18});
-  // stagger siblings within a grid
-  document.querySelectorAll('.grid3,.grid2,.metrics').forEach(g=>{
-    [...g.children].forEach((c,i)=>{ if(c.classList.contains('reveal')||c.querySelector) c.style.transitionDelay=(i*90)+'ms'; });
-  });
-  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+var REDUCE_M=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // 顶部状态胶囊 → 跳到案例 01：先让目标瞬间归位（跳过入场位移），再按导航高度精确滚动
-  const heroStatus=document.querySelector('.hero-status');
-  if(heroStatus) heroStatus.addEventListener('click',(e)=>{
-    const t=document.getElementById('case-1'); if(!t) return;
-    e.preventDefault();
-    t.style.transition='none'; t.classList.add('in');
-    const y=t.getBoundingClientRect().top+window.scrollY-80;
-    window.scrollTo({top:y,behavior:'smooth'});
-    history.replaceState(null,'','#case-1');
-  });
+/* entry gate — click to pull the curtain open, revealing the site */
+(function(){
+  var gate=document.getElementById('gate');if(!gate)return;
+  if(REDUCE_M){gate.remove();return;}
+  document.documentElement.classList.add('gate-lock');
+  var opened=false;
+  function open(){if(opened)return;opened=true;gate.classList.add('open');
+    document.documentElement.classList.remove('gate-lock');
+    setTimeout(function(){gate.remove();},1150);}
+  gate.addEventListener('click',open);
+  document.addEventListener('keydown',function(e){if(!opened&&(e.key==='Enter'||e.key===' ')){e.preventDefault();open();}});
+})();
 
-  // metrics observer (they sit inside .metric, not .reveal)
-  const mio = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ runCount(e.target); mio.unobserve(e.target);} });
-  },{threshold:.4});
-  document.querySelectorAll('[data-count]').forEach(el=>mio.observe(el));
-
-  function runCount(el){
-    if(el.dataset.done) return; el.dataset.done=1;
-    const target=+el.dataset.count, pre=el.dataset.prefix||'', suf=el.dataset.suffix||'';
-    if(target===0){ el.textContent=pre+'0'+suf; return; }
-    const dur=900, t0=performance.now();
-    function tick(now){
-      const p=Math.min((now-t0)/dur,1), e=1-Math.pow(1-p,3);
-      el.textContent=pre+Math.round(target*e)+suf;
-      if(p<1) requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
+/* interactive works-graph — 5 tools, spring physics, draggable (calm palette) */
+(function(){
+  var cv=document.getElementById('wgraph');if(!cv)return;var ctx=cv.getContext('2d');
+  var dpr=Math.min(window.devicePixelRatio||1,2),W=0,H=0;
+  var nodes=[
+    {id:'split',label:'名单拆分工具',sub:'导入端',type:'work',hx:.21,hy:.30},
+    {id:'merge',label:'成绩汇总工具',sub:'汇总端',type:'work',hx:.21,hy:.72},
+    {id:'hinge',label:'AI 使用者测试',sub:'枢纽 · 研究 × 产品',type:'hinge',hx:.53,hy:.51},
+    {id:'eng',label:'English House',sub:'英语学习',type:'self',hx:.84,hy:.30},
+    {id:'mind',label:'念头分拣器',sub:'情绪 / 认知',type:'self',hx:.84,hy:.72}
+  ];
+  var byId={};nodes.forEach(function(n){byId[n.id]=n;});
+  var edges=[['split','merge',true],['split','hinge',false],['merge','hinge',false],['hinge','eng',false],['hinge','mind',false]];
+  var BORDER={work:'#c2c7bd',hinge:'#6f8077',self:'#c2c7bd'};
+  var FILL={work:'#fbfbf9',hinge:'#eef1ee',self:'#fbfbf9'};
+  var mouse={x:-9999,y:-9999,down:false},drag=null,hover=null;
+  function size(){var r=cv.getBoundingClientRect();W=cv.width=Math.max(1,r.width*dpr);H=cv.height=Math.max(1,r.height*dpr);
+    nodes.forEach(function(n){n.HX=n.hx*W;n.HY=n.hy*H;if(n.x===undefined){n.x=W/2;n.y=H/2;n.vx=0;n.vy=0;}});}
+  function chip(n){ctx.font='500 '+(14*dpr)+'px "Noto Serif SC",serif';return {w:ctx.measureText(n.label).width+34*dpr,h:36*dpr};}
+  function toCv(e){var r=cv.getBoundingClientRect();return {x:(e.clientX-r.left)*dpr,y:(e.clientY-r.top)*dpr};}
+  function hit(p){for(var i=nodes.length-1;i>=0;i--){var n=nodes[i],c=chip(n);if(Math.abs(p.x-n.x)<c.w/2&&Math.abs(p.y-n.y)<c.h/2+6*dpr)return n;}return null;}
+  cv.addEventListener('mousedown',function(e){var n=hit(toCv(e));if(n){drag=n;mouse.down=true;cv.style.cursor='grabbing';}});
+  window.addEventListener('mousemove',function(e){var p=toCv(e);mouse.x=p.x;mouse.y=p.y;if(drag){drag.x=p.x;drag.y=p.y;drag.vx=0;drag.vy=0;}else{hover=hit(p);cv.style.cursor=hover?'grab':'default';}});
+  window.addEventListener('mouseup',function(){drag=null;mouse.down=false;cv.style.cursor='default';});
+  cv.addEventListener('mouseleave',function(){mouse.x=mouse.y=-9999;if(!mouse.down)hover=null;});
+  function physics(){
+    for(var i=0;i<nodes.length;i++){var n=nodes[i];if(n===drag)continue;
+      var fx=(n.HX-n.x)*0.020,fy=(n.HY-n.y)*0.020;
+      for(var j=0;j<nodes.length;j++){if(i===j)continue;var m=nodes[j];var dx=n.x-m.x,dy=n.y-m.y,d2=dx*dx+dy*dy,d=Math.sqrt(d2)||1;var rep=Math.min(1.2,(9000*dpr*dpr)/d2);fx+=dx/d*rep;fy+=dy/d*rep;}
+      if(mouse.x>-999){var mdx=n.x-mouse.x,mdy=n.y-mouse.y,md=Math.hypot(mdx,mdy);if(md<90*dpr){var f=(1-md/(90*dpr))*1.3;fx+=mdx/(md||1)*f;fy+=mdy/(md||1)*f;}}
+      n.vx=(n.vx+fx)*0.86;n.vy=(n.vy+fy)*0.86;n.x+=n.vx;n.y+=n.vy;}
+    edges.forEach(function(e){var a=byId[e[0]],b=byId[e[1]],dx=b.x-a.x,dy=b.y-a.y,d=Math.hypot(dx,dy)||1,rest=Math.hypot(b.HX-a.HX,b.HY-a.HY),f=(d-rest)*0.012,ux=dx/d*f,uy=dy/d*f;if(a!==drag){a.vx+=ux;a.vy+=uy;}if(b!==drag){b.vx-=ux;b.vy-=uy;}});
   }
-  // 点击后才加载 iframe（避免拖慢首屏）
-  function loadAssessment(promptEl){
-    const card = promptEl.parentElement;
-    const wrap = card.querySelector('.live-frame-wrap');
-    const iframe = wrap.querySelector('iframe');
-    if(!iframe.src){ iframe.src = iframe.dataset.src; }
-    wrap.classList.add('on');
-    promptEl.style.display = 'none';
-  }
+  function rr(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+  function draw(now){ctx.clearRect(0,0,W,H);
+    edges.forEach(function(e){var a=byId[e[0]],b=byId[e[1]];ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
+      ctx.strokeStyle=e[2]?'rgba(111,128,119,.5)':'rgba(35,40,42,.12)';ctx.lineWidth=(e[2]?1.6:1)*dpr;ctx.stroke();
+      if(e[2]){var tt=((now*0.00016)%1),px=a.x+(b.x-a.x)*tt,py=a.y+(b.y-a.y)*tt;ctx.beginPath();ctx.arc(px,py,2.4*dpr,0,6.28);ctx.fillStyle='#6f8077';ctx.fill();}});
+    nodes.forEach(function(n){var c=chip(n),w=c.w,h=c.h,x=n.x-w/2,y=n.y-h/2,on=(n===hover||n===drag);
+      if(on){ctx.shadowColor='rgba(35,40,42,.18)';ctx.shadowBlur=20*dpr;ctx.shadowOffsetY=4*dpr;}
+      rr(x,y,w,h,h/2);ctx.fillStyle=FILL[n.type];ctx.fill();ctx.shadowBlur=0;ctx.shadowOffsetY=0;
+      ctx.lineWidth=(on?1.8:1.2)*dpr;ctx.strokeStyle=on?'#6f8077':BORDER[n.type];ctx.stroke();
+      ctx.font='500 '+(14*dpr)+'px "Noto Serif SC",serif';ctx.fillStyle='#23282a';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(n.label,n.x,n.y);
+      if(on){ctx.font='400 '+(11*dpr)+'px "Noto Sans SC",sans-serif';ctx.fillStyle='#56655d';ctx.fillText(n.sub,n.x,n.y+h/2+13*dpr);}});}
+  function loop(now){if(!REDUCE_M)physics();draw(now);requestAnimationFrame(loop);}
+  function start(){size();nodes.forEach(function(n){n.x=W/2;n.y=H/2;});requestAnimationFrame(loop);
+    var rt;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){nodes.forEach(function(n){n.x=undefined;});size();},200);});}
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(start);else setTimeout(start,300);
+})();
+
+/* number count-up on the case stats */
+(function(){
+  if(REDUCE_M||!('IntersectionObserver' in window))return;
+  function run(el){if(el.dataset.done)return;el.dataset.done=1;var raw=el.textContent.trim();
+    var m=raw.match(/^(\D*)(\d+(?:\.\d+)?)([\s\S]*)$/);if(!m)return;var pre=m[1],ns=m[2],post=m[3],end=parseFloat(ns);if(!isFinite(end)||end===0)return;
+    var dec=(ns.split('.')[1]||'').length,t0=performance.now(),dur=1100;el.textContent=pre+(0).toFixed(dec)+post;
+    (function tick(now){var p=Math.min((now-t0)/dur,1),e=1-Math.pow(1-p,3);el.textContent=pre+(end*e).toFixed(dec)+post;if(p<1)requestAnimationFrame(tick);})(t0);}
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){run(e.target);io.unobserve(e.target);}});},{threshold:.5});
+  document.querySelectorAll('.stat .n').forEach(function(el){io.observe(el);});
+})();
+
+/* subtle, reduced-motion-safe scroll reveal (content is visible by default) */
+(function(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){document.querySelectorAll('.r').forEach(function(e){e.classList.add('in')});return;}
+  if(!('IntersectionObserver' in window)){document.querySelectorAll('.r').forEach(function(e){e.classList.add('in')});return;}
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.14,rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.r').forEach(function(e,i){e.style.transitionDelay=(Math.min(i,1)*0)+'ms';io.observe(e);});
+})();
 </script>
-
 </body>
 </html>
